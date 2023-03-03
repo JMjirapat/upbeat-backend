@@ -1,0 +1,5 @@
+package AST;
+
+interface Node {
+}
+

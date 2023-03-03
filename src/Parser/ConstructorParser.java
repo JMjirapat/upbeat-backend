@@ -1,15 +1,38 @@
+package Parser;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import Tokenizer.Tokenizer;
+import AST.*;
+import Game.Direction;
+
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 
 public class ConstructorParser implements Parser{
 
-    private final Tokenizer tkz;
+    private final Tokenizer tokenizer;
+
     private final List<String> commands = Arrays.asList("done", "relocate", "move", "invest", "collect", "shoot");
+
     private final List<String> reserved = Arrays.asList("collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while");
 
     ConstructorParser(Tokenizer tkz){
-        this.tkz = tkz;
+        if (!tkz.hasNextToken())
+            throw new StatementRequired(tkz.getLine());
+        this.tokenizer = tkz;
     }
+
+    private boolean elem(String x, List<String> list){
+        Predicate<String> equalsX = a -> a.equals(x);
+        return list.stream().anyMatch(equalsX);
+    }
+
+    public static Predicate<String> isNumber = str -> str.matches("\\d+");
+
+    public static Predicate<String> isString = str -> str.matches("[a-zA-Z]+");
 
     //    Plan → Statement+
     //    Statement → Command | BlockStatement | IfStatement | WhileStatement
@@ -29,15 +52,23 @@ public class ConstructorParser implements Parser{
     //    Power → <number> | <identifier> | ( Expression ) | InfoExpression
     //    InfoExpression → opponent | nearby Direction
 
-    //    Plan → Statement+
     @Override
     public PlanNode parse() throws SyntaxError, LexicalError {
-        PlanNode result = parseStatement();
+        PlanNode plan = parseStatements.apply(tokenizer);
         // reject if there is remaining token
-        if (tkz.hasNextToken())
+        if (tokenizer.hasNextToken())
             throw new SyntaxError("leftover token");
-        return result;
+        return plan;
     }
+
+    //    Plan → Statement+
+    private Function<Tokenizer,PlanNode> parseStatements = tkz -> {
+        ArrayList<PlanNode> statements = new ArrayList<>();
+        while (tkz.hasNextToken()) {
+            statements.add(parseStatement());
+        }
+        return new StatementsEvaluator(statements);
+    };
 
     //    Statement → Command | BlockStatement | IfStatement | WhileStatement
     private PlanNode parseStatement() throws LexicalError, SyntaxError {
@@ -54,7 +85,7 @@ public class ConstructorParser implements Parser{
 
     //    Command → AssignmentStatement | ActionCommand
     private PlanNode parseCommand() throws LexicalError, SyntaxError {
-        if(commands.contains(tkz.peek())){
+        if(elem(tkz.peek(),commands)){
             return parseActionCommand();
         }else{
             return parseAssignmentStatement();
@@ -63,7 +94,7 @@ public class ConstructorParser implements Parser{
 
     //    AssignmentStatement → <identifier> = Expression
     private PlanNode parseAssignmentStatement() throws LexicalError, SyntaxError {
-        if (reserved.contains(tkz.peek()))
+        if (elem(tkz.peek(),reserved))
             throw new SyntaxError("Identifier mustn't be reserved word");
         String identifier = tkz.consume();
         if(tkz.peek("=")){
@@ -80,7 +111,7 @@ public class ConstructorParser implements Parser{
         if(tkz.peek("done")){
             return new DoneNode();
         }else if(tkz.peek("relocate")){
-            return new Relocate();
+            return new RelocateNode();
         }else if(tkz.peek("move")){
             return parseMoveCommand();
         }else if(tkz.peek("invest") || tkz.peek("collect")){
@@ -131,7 +162,11 @@ public class ConstructorParser implements Parser{
     //    BlockStatement → { Statement* }
     private PlanNode parseBlockStatement() throws LexicalError, SyntaxError {
         tkz.consume("{");
-        PlanNode s = parseStatement();
+        if(tkz.peek("}")){
+            tkz.consume("}");
+            return new EmptyNode();
+        }
+        PlanNode s = parseStatements();
         tkz.consume("}");
         return s;
     }
@@ -146,7 +181,7 @@ public class ConstructorParser implements Parser{
         PlanNode ts = parseStatement();
         tkz.consume("else");
         PlanNode fs = parseStatement();
-        return new IfElseNode(expression,ts,fs);
+        return new IfElseEvaluator(expression,ts,fs);
     }
 
     //    WhileStatement → while ( Expression ) Statement
@@ -156,7 +191,7 @@ public class ConstructorParser implements Parser{
         ExprNode expression = parseExpression();
         tkz.consume(")");
         PlanNode s = parseStatement();
-        return new WhileNode(expression,s);
+        return new WhileEvaluator(expression,s);
     }
 
     //    Expression → Expression + Term | Expression - Term | Term // T ((+T) | (-T))*
@@ -165,10 +200,10 @@ public class ConstructorParser implements Parser{
         while (tkz.peek("+") || tkz.peek("-")) {
             if(tkz.peek("+")){
                 tkz.consume();
-                v = new BinaryArithExpr(v, "+", parseTerm());
+                v = new ArithmeticEvaluator(v, "+", parseTerm());
             }else if(tkz.peek("-")){
                 tkz.consume();
-                v = new BinaryArithExpr(v, "-", parseTerm());
+                v = new ArithmeticEvaluator(v, "-", parseTerm());
             }
         }
         return v;
@@ -180,13 +215,13 @@ public class ConstructorParser implements Parser{
         while (tkz.peek("*") || tkz.peek("/") || tkz.peek("%")) {
             if(tkz.peek("*")){
                 tkz.consume();
-                v = new BinaryArithExpr(v, "*", parseFactor());
+                v = new ArithmeticEvaluator(v, "*", parseFactor());
             }else if(tkz.peek("/")){
                 tkz.consume();
-                v = new BinaryArithExpr(v, "/", parseFactor());
+                v = new ArithmeticEvaluator(v, "/", parseFactor());
             }else if(tkz.peek("%")){
                 tkz.consume();
-                v = new BinaryArithExpr(v, "%", parseFactor());
+                v = new ArithmeticEvaluator(v, "%", parseFactor());
             }
         }
         return v;
@@ -197,17 +232,17 @@ public class ConstructorParser implements Parser{
         ExprNode v = parsePower();
         while (tkz.peek("^")) {
             tkz.consume();
-            v = new BinaryArithExpr(v, "^", parseFactor());
+            v = new ArithmeticEvaluator(v, "^", parseFactor());
         }
         return v;
     }
 
     //    Power → <number> | <identifier> | ( Expression ) | InfoExpression
     private ExprNode parsePower() throws LexicalError, SyntaxError {
-        if (isNumber(tkz.peek())) {
+        if (isNumber.test(tkz.peek())) {
             return new IntLit(Integer.parseInt(tkz.consume()));
-        }else if(isString(tkz.peek())){
-            return new Variable(tkz.consume());
+        }else if(isString.test(tkz.peek())){
+            return new Identifier(tkz.consume());
         }else if(tkz.peek("(")){
             tkz.consume("(");
             ExprNode v = parseExpression();
@@ -222,19 +257,20 @@ public class ConstructorParser implements Parser{
     private ExprNode parseInfoExpression() throws LexicalError, SyntaxError {
         if(tkz.peek("opponent")){
             tkz.consume();
-            return new OppNode;
+            return new OpponentNode();
         }else{
             tkz.consume("nearby");
-            return new NearByNode()
+            Direction direction = parseDirection();
+            return new NearByNode(direction);
         }
     }
 
     //
-    public static boolean isNumber(String str) {
-        return str.matches("\\d+");  //match a number with optional '-' and decimal.
-    }
-
-    public static boolean isString(String str){
-        return str.matches("[a-zA-Z]+");
-    }
+//    public static boolean isNumber(String str) {
+//        return str.matches("\\d+");  //match a number with optional '-' and decimal.
+//    }
+//
+//    public static boolean isString(String str){
+//        return str.matches("[a-zA-Z]+");
+//    }
 }

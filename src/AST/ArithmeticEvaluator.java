@@ -1,17 +1,19 @@
+package AST;
+
 import java.util.Map;
 
-class BinaryArithExpr implements ExprNode {
+public class ArithmeticEvaluator implements ExprNode {
     private ExprNode left, right;
     private String op;
-    public BinaryArithExpr(
+    public ArithmeticEvaluator(
             ExprNode left, String op, ExprNode right) {
         this.left = left;
         this.op = op;
         this.right = right;
     }
-    public int eval(Map<String, Integer> bindings) throws EvalError {
-        int lv = left.eval(bindings);
-        int rv = right.eval(bindings);
+    public long eval(Map<String, Integer> bindings) throws EvalError {
+        long lv = left.eval(bindings);
+        long rv = right.eval(bindings);
         if (op.equals("+")) return lv + rv;
         if (op.equals("*")) return lv * rv;
         if (op.equals("-")) return lv - rv;

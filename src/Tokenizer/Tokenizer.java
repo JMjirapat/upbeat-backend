@@ -1,4 +1,6 @@
-interface Tokenizer {
+package Tokenizer;
+
+public interface Tokenizer {
     /** Returns true if there is
      *  more token */
     boolean hasNextToken();
