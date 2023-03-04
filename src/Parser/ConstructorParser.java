@@ -4,35 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import Tokenizer.Tokenizer;
+import Parser.ParserException.*;
 import AST.*;
 import Game.Direction;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
-
-
 public class ConstructorParser implements Parser{
 
-    private final Tokenizer tokenizer;
-
+    private final Tokenizer tkz;
     private final List<String> commands = Arrays.asList("done", "relocate", "move", "invest", "collect", "shoot");
-
     private final List<String> reserved = Arrays.asList("collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while");
 
     ConstructorParser(Tokenizer tkz){
         if (!tkz.hasNextToken())
-            throw new StatementRequired(tkz.getLine());
-        this.tokenizer = tkz;
+            throw new ParserException.TokenRequired();
+        this.tkz = tkz;
     }
 
-    private boolean elem(String x, List<String> list){
-        Predicate<String> equalsX = a -> a.equals(x);
-        return list.stream().anyMatch(equalsX);
-    }
-
-    public static Predicate<String> isNumber = str -> str.matches("\\d+");
-
-    public static Predicate<String> isString = str -> str.matches("[a-zA-Z]+");
+//    public static Predicate<String> isNumber = str -> str.matches("\\d+");
+//    public static Predicate<String> isString = str -> str.matches("[a-zA-Z]+");
 
     //    Plan → Statement+
     //    Statement → Command | BlockStatement | IfStatement | WhileStatement
@@ -53,25 +42,33 @@ public class ConstructorParser implements Parser{
     //    InfoExpression → opponent | nearby Direction
 
     @Override
-    public PlanNode parse() throws SyntaxError, LexicalError {
-        PlanNode plan = parseStatements.apply(tokenizer);
+    public PlanNode parse() {
+        PlanNode plan = parseStatements();
         // reject if there is remaining token
-        if (tokenizer.hasNextToken())
-            throw new SyntaxError("leftover token");
+        if (tkz.hasNextToken())
+            throw new LeftoverToken(tkz.getLine());
         return plan;
     }
 
     //    Plan → Statement+
-    private Function<Tokenizer,PlanNode> parseStatements = tkz -> {
+    private PlanNode parseStatements(){
         ArrayList<PlanNode> statements = new ArrayList<>();
         while (tkz.hasNextToken()) {
             statements.add(parseStatement());
         }
         return new StatementsEvaluator(statements);
-    };
+    }
+
+//    private Function<Tokenizer,PlanNode> parseStatements = tkz -> {
+//        ArrayList<PlanNode> statements = new ArrayList<>();
+//        while (tkz.hasNextToken()) {
+//            statements.add(parseStatement.apply(tkz));
+//        }
+//        return new StatementsEvaluator(statements);
+//    };
 
     //    Statement → Command | BlockStatement | IfStatement | WhileStatement
-    private PlanNode parseStatement() throws LexicalError, SyntaxError {
+    private PlanNode parseStatement(){
         if(tkz.peek("{")){
             return parseBlockStatement();
         }else if(tkz.peek("while")){
@@ -83,9 +80,21 @@ public class ConstructorParser implements Parser{
         }
     }
 
+//    private Function<Tokenizer,PlanNode> parseStatement = tkz -> {
+//        if(tkz.peek("{")){
+//            return parseBlockStatement();
+//        }else if(tkz.peek("while")){
+//            return parseWhileStatement();
+//        }else if(tkz.peek("if")){
+//            return parseIfStatement();
+//        }else{
+//            return parseCommand();
+//        }
+//    };
+
     //    Command → AssignmentStatement | ActionCommand
-    private PlanNode parseCommand() throws LexicalError, SyntaxError {
-        if(elem(tkz.peek(),commands)){
+    private PlanNode parseCommand() {
+        if(commands.contains(tkz.peek())){
             return parseActionCommand();
         }else{
             return parseAssignmentStatement();
@@ -93,21 +102,21 @@ public class ConstructorParser implements Parser{
     }
 
     //    AssignmentStatement → <identifier> = Expression
-    private PlanNode parseAssignmentStatement() throws LexicalError, SyntaxError {
-        if (elem(tkz.peek(),reserved))
-            throw new SyntaxError("Identifier mustn't be reserved word");
+    private PlanNode parseAssignmentStatement() {
+        if (reserved.contains(tkz.peek()))
+            throw new AssignToReserved(tkz.peek(), tkz.getLine());
         String identifier = tkz.consume();
         if(tkz.peek("=")){
             tkz.consume();
         }else{
-            throw new SyntaxError("Identifier is don't match");
+            throw new IllegalAssignment(tkz.getLine());
         }
         ExprNode expression = parseExpression();
         return new AssignmentNode(identifier,expression);
     }
 
     //    ActionCommand → done | relocate | MoveCommand | RegionCommand | AttackCommand
-    private PlanNode parseActionCommand() throws SyntaxError, LexicalError {
+    private PlanNode parseActionCommand() {
         if(tkz.peek("done")){
             return new DoneNode();
         }else if(tkz.peek("relocate")){
@@ -119,17 +128,17 @@ public class ConstructorParser implements Parser{
         }else if(tkz.peek("shoot")){
             return parseAttackCommand();
         }else{
-            throw  new SyntaxError("This command is not correct");
+            throw  new NoCommandMatch(tkz.peek(), tkz.getLine());
         }
     }
 
     //    MoveCommand → move Direction
-    private PlanNode parseMoveCommand() throws LexicalError {
+    private PlanNode parseMoveCommand() {
         Direction direction = parseDirection();
         return new MoveNode(direction);
     }
     //    RegionCommand → invest Expression | collect Expression
-    private PlanNode parseRegionCommand() throws LexicalError, SyntaxError {
+    private PlanNode parseRegionCommand() {
         String regionCommand = tkz.consume();
         ExprNode expression = parseExpression();
         if(regionCommand.equals("invest")){
@@ -139,28 +148,28 @@ public class ConstructorParser implements Parser{
         }
     }
     //    AttackCommand → shoot Direction Expression
-    private PlanNode parseAttackCommand() throws LexicalError, SyntaxError {
+    private PlanNode parseAttackCommand() {
         Direction direction = parseDirection();
         ExprNode expression = parseExpression();
         return new AttackNode(direction, expression);
     }
 
     //    Direction → up | down | upleft | upright | downleft | downright
-    private Direction parseDirection() throws LexicalError {
+    private Direction parseDirection() {
         String direction = tkz.consume();
         return switch (direction) {
-            case "up" -> Direction.Up;
-            case "down" -> Direction.Down;
-            case "upleft" -> Direction.UpLeft;
-            case "upright" -> Direction.UpRight;
-            case "downleft" -> Direction.DownLeft;
-            case "downright" -> Direction.DownRight;
-            default -> throw new InvalidDirection(direction);
+            case "up" -> Direction.UP;
+            case "down" -> Direction.DOWN;
+            case "upright" -> Direction.UPRIGHT;
+            case "upleft" -> Direction.UPLEFT;
+            case "downright" -> Direction.DOWNRIGHT;
+            case "downleft" -> Direction.DOWNLEFT;
+            default -> throw new InvalidDirection(direction, tkz.getLine());
         };
     }
 
     //    BlockStatement → { Statement* }
-    private PlanNode parseBlockStatement() throws LexicalError, SyntaxError {
+    private PlanNode parseBlockStatement() {
         tkz.consume("{");
         if(tkz.peek("}")){
             tkz.consume("}");
@@ -172,7 +181,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    IfStatement → if ( Expression ) then Statement else Statement
-    private PlanNode parseIfStatement() throws LexicalError, SyntaxError {
+    private PlanNode parseIfStatement() {
         tkz.consume("if");
         tkz.consume("(");
         ExprNode expression = parseExpression();
@@ -185,7 +194,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    WhileStatement → while ( Expression ) Statement
-    private PlanNode parseWhileStatement() throws LexicalError, SyntaxError {
+    private PlanNode parseWhileStatement() {
         tkz.consume("while");
         tkz.consume("(");
         ExprNode expression = parseExpression();
@@ -195,7 +204,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    Expression → Expression + Term | Expression - Term | Term // T ((+T) | (-T))*
-    private ExprNode parseExpression() throws SyntaxError, LexicalError {
+    private ExprNode parseExpression() {
         ExprNode v = parseTerm();
         while (tkz.peek("+") || tkz.peek("-")) {
             if(tkz.peek("+")){
@@ -210,7 +219,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    Term → Term * Factor | Term / Factor | Term % Factor | Factor // F ((*F) | (/F) | (%F))*
-    private ExprNode parseTerm() throws LexicalError, SyntaxError {
+    private ExprNode parseTerm() {
         ExprNode v = parseFactor();
         while (tkz.peek("*") || tkz.peek("/") || tkz.peek("%")) {
             if(tkz.peek("*")){
@@ -228,7 +237,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    Factor → Power ^ Factor | Power
-    private ExprNode parseFactor() throws LexicalError, SyntaxError {
+    private ExprNode parseFactor() {
         ExprNode v = parsePower();
         while (tkz.peek("^")) {
             tkz.consume();
@@ -238,10 +247,10 @@ public class ConstructorParser implements Parser{
     }
 
     //    Power → <number> | <identifier> | ( Expression ) | InfoExpression
-    private ExprNode parsePower() throws LexicalError, SyntaxError {
-        if (isNumber.test(tkz.peek())) {
+    private ExprNode parsePower() {
+        if (isNumber(tkz.peek())) {
             return new IntLit(Integer.parseInt(tkz.consume()));
-        }else if(isString.test(tkz.peek())){
+        }else if(isString(tkz.peek())){
             return new Identifier(tkz.consume());
         }else if(tkz.peek("(")){
             tkz.consume("(");
@@ -254,7 +263,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    InfoExpression → opponent | nearby Direction
-    private ExprNode parseInfoExpression() throws LexicalError, SyntaxError {
+    private ExprNode parseInfoExpression() {
         if(tkz.peek("opponent")){
             tkz.consume();
             return new OpponentNode();
@@ -265,12 +274,19 @@ public class ConstructorParser implements Parser{
         }
     }
 
-    //
-//    public static boolean isNumber(String str) {
-//        return str.matches("\\d+");  //match a number with optional '-' and decimal.
-//    }
-//
-//    public static boolean isString(String str){
-//        return str.matches("[a-zA-Z]+");
+    private static boolean isNumber(String str){
+        return str.matches("\\d+");
+    }
+
+    private static boolean isString(String str){
+        return str.matches("[a-zA-Z]+");
+    }
+
+//    public static Predicate<String> isNumber = str -> str.matches("\\d+");
+//    public static Predicate<String> isString = str -> str.matches("[a-zA-Z]+");
+
+//    private boolean elem(String x, List<String> list){
+//        Predicate<String> equalsX = a -> a.equals(x);
+//        return list.stream().anyMatch(equalsX);
 //    }
 }

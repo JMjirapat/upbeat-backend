@@ -15,7 +15,9 @@ public interface Tokenizer {
      *  and returns it.
      *  effects: removes the next token
      *           from the input stream */
-    String consume() throws LexicalError;
-    void consume(String s) throws SyntaxError, LexicalError;
+    String consume();
+    void consume(String s);
+
+    int getLine();
 }
 

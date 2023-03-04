@@ -9,6 +9,6 @@ interface Parser {
      * throws: SyntaxError if the token
      * stream cannot be parsed
      */
-    PlanNode parse() throws SyntaxError, LexicalError;
+    PlanNode parse();
 }
 

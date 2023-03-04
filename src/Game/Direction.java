@@ -1,4 +1,5 @@
 package Game;
 
-public class Direction {
+public enum Direction {
+    UP,DOWN,UPRIGHT,UPLEFT,DOWNRIGHT,DOWNLEFT
 }
