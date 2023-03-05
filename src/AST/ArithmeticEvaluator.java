@@ -1,6 +1,7 @@
 package AST;
 
 import java.util.Map;
+import AST.ASTException.*;
 
 public class ArithmeticEvaluator implements ExprNode {
     private ExprNode left, right;
@@ -11,15 +12,16 @@ public class ArithmeticEvaluator implements ExprNode {
         this.op = op;
         this.right = right;
     }
-    public long eval(Map<String, Integer> bindings) throws EvalError {
-        long lv = left.eval(bindings);
-        long rv = right.eval(bindings);
+    public long eval(Game game) {
+        long lv = left.eval(game.getIdentifier());
+        long rv = right.eval(game.getIdentifier());
         if (op.equals("+")) return lv + rv;
         if (op.equals("*")) return lv * rv;
         if (op.equals("-")) return lv - rv;
         if (op.equals("/")) return lv / rv;
         if (op.equals("%")) return lv % rv;
-        throw new EvalError("unknown op: " + op);
+        if (op.equals("^")) return lv % rv;
+        throw new UnknownOperator(op);
     }
     public void prettyPrint(StringBuilder s) {
         s.append("(");

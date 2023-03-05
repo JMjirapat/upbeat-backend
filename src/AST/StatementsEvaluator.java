@@ -9,8 +9,6 @@ public class StatementsEvaluator implements PlanNode{
     }
 
     public void executePlan(Game game){
-        for (PlanNode statement:statements){
-            statement.executePlan(game);
-        }
+        statements.stream().forEach(stm -> stm.executePlan(game));
     }
 }
