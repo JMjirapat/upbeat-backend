@@ -42,8 +42,8 @@ public class ConstructorParser implements Parser{
     //    InfoExpression → opponent | nearby Direction
 
     @Override
-    public PlanNode parse() {
-        PlanNode plan = parseStatements();
+    public ExecNode parse() {
+        ExecNode plan = parseStatements();
         // reject if there is remaining token
         if (tkz.hasNextToken())
             throw new LeftoverToken(tkz.getLine());
@@ -51,8 +51,8 @@ public class ConstructorParser implements Parser{
     }
 
     //    Plan → Statement+
-    private PlanNode parseStatements(){
-        ArrayList<PlanNode> statements = new ArrayList<>();
+    private ExecNode parseStatements(){
+        ArrayList<ExecNode> statements = new ArrayList<>();
         while (tkz.hasNextToken()) {
             statements.add(parseStatement());
         }
@@ -68,7 +68,7 @@ public class ConstructorParser implements Parser{
 //    };
 
     //    Statement → Command | BlockStatement | IfStatement | WhileStatement
-    private PlanNode parseStatement(){
+    private ExecNode parseStatement(){
         if(tkz.peek("{")){
             return parseBlockStatement();
         }else if(tkz.peek("while")){
@@ -93,7 +93,7 @@ public class ConstructorParser implements Parser{
 //    };
 
     //    Command → AssignmentStatement | ActionCommand
-    private PlanNode parseCommand() {
+    private ExecNode parseCommand() {
         if(commands.contains(tkz.peek())){
             return parseActionCommand();
         }else{
@@ -102,7 +102,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    AssignmentStatement → <identifier> = Expression
-    private PlanNode parseAssignmentStatement() {
+    private ExecNode parseAssignmentStatement() {
         if (reserved.contains(tkz.peek()))
             throw new AssignToReserved(tkz.peek(), tkz.getLine());
         String identifier = tkz.consume();
@@ -116,7 +116,7 @@ public class ConstructorParser implements Parser{
     }
 
     //    ActionCommand → done | relocate | MoveCommand | RegionCommand | AttackCommand
-    private PlanNode parseActionCommand() {
+    private ExecNode parseActionCommand() {
         if(tkz.peek("done")){
             return new DoneNode();
         }else if(tkz.peek("relocate")){
@@ -133,12 +133,12 @@ public class ConstructorParser implements Parser{
     }
 
     //    MoveCommand → move Direction
-    private PlanNode parseMoveCommand() {
+    private ExecNode parseMoveCommand() {
         Direction direction = parseDirection();
         return new MoveNode(direction);
     }
     //    RegionCommand → invest Expression | collect Expression
-    private PlanNode parseRegionCommand() {
+    private ExecNode parseRegionCommand() {
         String regionCommand = tkz.consume();
         ExprNode expression = parseExpression();
         if(regionCommand.equals("invest")){
@@ -148,7 +148,7 @@ public class ConstructorParser implements Parser{
         }
     }
     //    AttackCommand → shoot Direction Expression
-    private PlanNode parseAttackCommand() {
+    private ExecNode parseAttackCommand() {
         Direction direction = parseDirection();
         ExprNode expression = parseExpression();
         return new AttackNode(direction, expression);
@@ -169,37 +169,37 @@ public class ConstructorParser implements Parser{
     }
 
     //    BlockStatement → { Statement* }
-    private PlanNode parseBlockStatement() {
+    private ExecNode parseBlockStatement() {
         tkz.consume("{");
         if(tkz.peek("}")){
             tkz.consume("}");
             return new EmptyNode();
         }
-        PlanNode s = parseStatements();
+        ExecNode s = parseStatements();
         tkz.consume("}");
         return s;
     }
 
     //    IfStatement → if ( Expression ) then Statement else Statement
-    private PlanNode parseIfStatement() {
+    private ExecNode parseIfStatement() {
         tkz.consume("if");
         tkz.consume("(");
         ExprNode expression = parseExpression();
         tkz.consume(")");
         tkz.consume("then");
-        PlanNode ts = parseStatement();
+        ExecNode ts = parseStatement();
         tkz.consume("else");
-        PlanNode fs = parseStatement();
+        ExecNode fs = parseStatement();
         return new IfElseEvaluator(expression,ts,fs);
     }
 
     //    WhileStatement → while ( Expression ) Statement
-    private PlanNode parseWhileStatement() {
+    private ExecNode parseWhileStatement() {
         tkz.consume("while");
         tkz.consume("(");
         ExprNode expression = parseExpression();
         tkz.consume(")");
-        PlanNode s = parseStatement();
+        ExecNode s = parseStatement();
         return new WhileEvaluator(expression,s);
     }
 

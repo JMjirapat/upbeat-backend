@@ -1,6 +1,6 @@
 package Parser;
 
-import AST.PlanNode;
+import AST.ExecNode;
 
 interface Parser {
     /**
@@ -9,6 +9,6 @@ interface Parser {
      * throws: SyntaxError if the token
      * stream cannot be parsed
      */
-    PlanNode parse();
+    ExecNode parse();
 }
 

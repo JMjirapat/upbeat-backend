@@ -1,11 +1,11 @@
 package AST;
 
-public class IfElseEvaluator implements PlanNode {
+public class IfElseEvaluator implements ExecNode {
     private ExprNode expression;
-    private PlanNode TrueStatement;
-    private PlanNode FalseStatement;
+    private ExecNode TrueStatement;
+    private ExecNode FalseStatement;
 
-    public IfElseEvaluator(ExprNode expr, PlanNode ts, PlanNode fs){
+    public IfElseEvaluator(ExprNode expr, ExecNode ts, ExecNode fs){
         this.expression = expr;
         this.TrueStatement = ts;
         this.FalseStatement = fs;

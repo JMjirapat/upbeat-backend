@@ -1,12 +1,12 @@
 package AST;
 
-public class WhileEvaluator implements PlanNode {
+public class WhileEvaluator implements ExecNode {
     private ExprNode expression;
-    private PlanNode statement;
+    private ExecNode statement;
 
     private int iteratorCount = 0;
 
-    public WhileEvaluator(ExprNode expr, PlanNode s){
+    public WhileEvaluator(ExprNode expr, ExecNode s){
         this.expression = expr;
         this.statement = s;
     }

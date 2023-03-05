@@ -2,7 +2,7 @@ package AST;
 
 import Game.Direction;
 
-public class MoveNode implements PlanNode {
+public class MoveNode implements ExecNode {
     private Direction direction;
     public MoveNode(Direction direction){
         this.direction = direction;

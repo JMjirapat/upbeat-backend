@@ -1,6 +1,6 @@
 package AST;
 
-public class InvestNode implements PlanNode {
+public class InvestNode implements ExecNode {
     private ExprNode expression;
     public InvestNode(ExprNode expression){
         this.expression = expression;

@@ -2,9 +2,9 @@ package AST;
 
 import java.util.ArrayList;
 
-public class StatementsEvaluator implements PlanNode{
-    ArrayList<PlanNode> statements;
-    public StatementsEvaluator(ArrayList<PlanNode> statements){
+public class StatementsEvaluator implements ExecNode {
+    ArrayList<ExecNode> statements;
+    public StatementsEvaluator(ArrayList<ExecNode> statements){
         this.statements = statements;
     }
 

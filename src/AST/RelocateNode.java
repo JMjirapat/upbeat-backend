@@ -1,6 +1,6 @@
 package AST;
 
-public class RelocateNode implements PlanNode {
+public class RelocateNode implements ExecNode {
 
     @Override
     public void executePlan(Game game) {

@@ -40,4 +40,10 @@ public class ParserException extends RuntimeException{
             super("Command '" + wrongCmd + "' is not match in 'Action Command'. At line " + line);
         }
     }
+
+    public static class NoConfigMatch extends ParserException{
+        public NoConfigMatch(String wrongConfig,int line) {
+            super("Config '" + wrongConfig + "' is not match in 'Identifier Config'. At line " + line);
+        }
+    }
 }

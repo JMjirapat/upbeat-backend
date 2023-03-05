@@ -17,6 +17,8 @@ public abstract class Game {
     public long costToRevision;
     public long maxDeposit;
     public long interestPercentage;
+
+    private int PlayerIndex;
     private Player currentPlayer;
     private Territory territory;
     private ArrayList<Player> players;

@@ -2,7 +2,7 @@ package AST;
 
 import Game.Direction;
 
-public class AttackNode implements PlanNode {
+public class AttackNode implements ExecNode {
 
     private final Direction direction;
     private final ExprNode expression;

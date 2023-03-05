@@ -1,5 +1,5 @@
 package AST;
-public class EmptyNode implements PlanNode{
+public class EmptyNode implements ExecNode {
 
     @Override
     public void executePlan(Game game) {

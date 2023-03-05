@@ -112,6 +112,6 @@ public class ConstructorTokenizer implements Tokenizer{
     }
 
     public static boolean canContainInVariable(char c){
-        return (isDigit(c) || isLetter(c) || isDigit(c));
+        return (isDigit(c) || isLetter(c) || isUnderscore(c));
     }
 }

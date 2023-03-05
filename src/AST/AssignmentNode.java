@@ -3,7 +3,7 @@ package AST;
 import java.util.Arrays;
 import java.util.List;
 
-public class AssignmentNode implements PlanNode {
+public class AssignmentNode implements ExecNode {
     private final String identifier;
     private final ExprNode expression;
 

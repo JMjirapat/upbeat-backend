@@ -1,6 +1,6 @@
 package AST;
 
-public class CollectNode implements PlanNode {
+public class CollectNode implements ExecNode {
 
     private ExprNode expression;
     public CollectNode(ExprNode expression){
