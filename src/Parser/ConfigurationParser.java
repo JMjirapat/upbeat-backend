@@ -1,7 +1,7 @@
 package Parser;
 
 import AST.ConfigurationNode;
-import AST.ExecNode;
+import AST.Node.*;
 import Tokenizer.Tokenizer;
 import Parser.ParserException.*;
 
@@ -11,12 +11,12 @@ public class ConfigurationParser implements Parser {
     private int n;
     private int init_plan_min;
     private int init_plan_sec;
-    private int init_budget;
-    private int init_center_dep;
+    private long init_budget;
+    private long init_center_dep;
     private int plan_rev_min;
     private int plan_rev_sec;
-    private int rev_cost;
-    private int max_dep;
+    private long rev_cost;
+    private long max_dep;
     private int interest_pct;
 
     ConfigurationParser(Tokenizer tkz){

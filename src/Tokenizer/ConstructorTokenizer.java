@@ -12,7 +12,7 @@ public class ConstructorTokenizer implements Tokenizer{
 //    public static Predicate<Character> isDigit = c -> Character.isDigit(c);
 //    public static Predicate<Character> isChar = c -> Character.isLetter(c);
 
-    ConstructorTokenizer(ArrayList<String> lines) {
+    public ConstructorTokenizer(ArrayList<String> lines) {
         this.lines = new ArrayList<>(lines);
         pos = 0;
         line = 0;

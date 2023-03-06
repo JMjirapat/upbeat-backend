@@ -6,8 +6,14 @@ public class ASTException extends RuntimeException{
     }
 
     public static class UnknownOperator extends ASTException {
-        protected UnknownOperator(String msg) {
-            super(msg);
+        protected UnknownOperator(String op) {
+            super("Operator '" + op + "' is unknown operator");
+        }
+    }
+
+    public static class UnknownVariable extends ASTException {
+        protected UnknownVariable(String var) {
+            super("Variable '" + var + "' is unknown variable");
         }
     }
 }

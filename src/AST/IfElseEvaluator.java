@@ -1,5 +1,8 @@
 package AST;
 
+import AST.Node.*;
+import Game.Game;
+
 public class IfElseEvaluator implements ExecNode {
     private ExprNode expression;
     private ExecNode TrueStatement;
@@ -11,12 +14,12 @@ public class IfElseEvaluator implements ExecNode {
         this.FalseStatement = fs;
     }
     @Override
-    public void executePlan(Game game) {
+    public void execute(Game game) {
         boolean condition = (new BooleanEvaluator(expression)).execute(game);
         if(condition){
-            TrueStatement.executePlan(game);
+            TrueStatement.execute(game);
         }else{
-            FalseStatement.executePlan(game);
+            FalseStatement.execute(game);
         }
     }
 }

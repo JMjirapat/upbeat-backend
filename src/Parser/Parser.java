@@ -1,6 +1,6 @@
 package Parser;
 
-import AST.ExecNode;
+import AST.Node.ExecNode;
 
 interface Parser {
     /**

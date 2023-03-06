@@ -2,6 +2,8 @@ package AST;
 
 import java.util.Arrays;
 import java.util.List;
+import Game.Game;
+import AST.Node.ExecNode;
 
 public class AssignmentNode implements ExecNode {
     private final String identifier;
@@ -14,7 +16,7 @@ public class AssignmentNode implements ExecNode {
     }
 
     @Override
-    public void executePlan(Game game) {
+    public void execute(Game game) {
         if(special.contains(identifier)){
             return;
         }

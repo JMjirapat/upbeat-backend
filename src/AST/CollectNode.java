@@ -1,5 +1,8 @@
 package AST;
 
+import AST.Node.*;
+import Game.Game;
+
 public class CollectNode implements ExecNode {
 
     private ExprNode expression;
@@ -7,7 +10,7 @@ public class CollectNode implements ExecNode {
         this.expression = expression;
     }
     @Override
-    public void executePlan(Game game) {
-        game.getCurrentPlayer().collect(expression.eval(game.getIdentifier()));
+    public void execute(Game game) {
+        game.getCurrentPlayer().collect(expression.eval(game));
     }
 }

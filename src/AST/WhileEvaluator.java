@@ -1,5 +1,8 @@
 package AST;
 
+import AST.Node.ExecNode;
+import Game.Game;
+
 public class WhileEvaluator implements ExecNode {
     private ExprNode expression;
     private ExecNode statement;
@@ -11,10 +14,10 @@ public class WhileEvaluator implements ExecNode {
         this.statement = s;
     }
     @Override
-    public void executePlan(Game game) {
+    public void execute(Game game) {
         boolean condition = (new BooleanEvaluator(expression)).execute(game);
         while(condition && iteratorCount <10000){
-            statement.executePlan(game);
+            statement.execute(game);
             iteratorCount++;
         }
     }

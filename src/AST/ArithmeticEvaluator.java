@@ -1,7 +1,8 @@
 package AST;
 
-import java.util.Map;
+import Game.Game;
 import AST.ASTException.*;
+import AST.Node.ExprNode;
 
 public class ArithmeticEvaluator implements ExprNode {
     private ExprNode left, right;
@@ -13,8 +14,8 @@ public class ArithmeticEvaluator implements ExprNode {
         this.right = right;
     }
     public long eval(Game game) {
-        long lv = left.eval(game.getIdentifier());
-        long rv = right.eval(game.getIdentifier());
+        long lv = left.eval(game);
+        long rv = right.eval(game);
         if (op.equals("+")) return lv + rv;
         if (op.equals("*")) return lv * rv;
         if (op.equals("-")) return lv - rv;

@@ -1,20 +1,20 @@
 package Parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import Tokenizer.Tokenizer;
 import Parser.ParserException.*;
 import AST.*;
+import AST.Node.*;
 import Game.Direction;
 
 public class ConstructorParser implements Parser{
 
     private final Tokenizer tkz;
-    private final List<String> commands = Arrays.asList("done", "relocate", "move", "invest", "collect", "shoot");
-    private final List<String> reserved = Arrays.asList("collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while");
+    private final List<String> commands = List.of("done", "relocate", "move", "invest", "collect", "shoot");
+    private final List<String> reserved = List.of("collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while");
 
-    ConstructorParser(Tokenizer tkz){
+    public ConstructorParser(Tokenizer tkz){
         if (!tkz.hasNextToken())
             throw new ParserException.TokenRequired();
         this.tkz = tkz;

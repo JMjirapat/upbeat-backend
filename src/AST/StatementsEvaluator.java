@@ -1,5 +1,8 @@
 package AST;
 
+import AST.Node.ExecNode;
+import Game.*;
+
 import java.util.ArrayList;
 
 public class StatementsEvaluator implements ExecNode {
@@ -8,7 +11,7 @@ public class StatementsEvaluator implements ExecNode {
         this.statements = statements;
     }
 
-    public void executePlan(Game game){
-        statements.stream().forEach(stm -> stm.executePlan(game));
+    public void execute(Game game){
+        statements.stream().forEach(stm -> stm.execute(game));
     }
 }

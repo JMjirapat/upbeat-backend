@@ -1,5 +1,8 @@
 package AST;
 
+import AST.Node.ExprNode;
+import Game.Game;
+
 public class BooleanEvaluator {
 
     private ExprNode expression;
@@ -9,7 +12,7 @@ public class BooleanEvaluator {
     }
 
     public boolean execute(Game game) {
-        if(expression.eval(game.getIdentifier()) > 0){
+        if(expression.eval(game) > 0){
             return true;
         }else{
             return false;

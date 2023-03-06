@@ -1,4 +1,6 @@
 package AST;
+import AST.Node.*;
+import Game.Game;
 
 public class InvestNode implements ExecNode {
     private ExprNode expression;
@@ -6,7 +8,7 @@ public class InvestNode implements ExecNode {
         this.expression = expression;
     }
     @Override
-    public void executePlan(Game game) {
-        game.getCurrentPlayer().invest(expression.eval(game.getIdentifier()));
+    public void execute(Game game) {
+        game.getCurrentPlayer().invest(expression.eval(game));
     }
 }

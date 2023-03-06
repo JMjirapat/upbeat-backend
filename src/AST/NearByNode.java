@@ -1,6 +1,8 @@
 package AST;
 
 import Game.Direction;
+import AST.Node.ExprNode;
+import Game.Game;
 
 public class NearByNode implements ExprNode {
     private Direction direction;
@@ -9,7 +11,7 @@ public class NearByNode implements ExprNode {
     }
 
     @Override
-    public long eval(Game game) throws EvalError {
+    public long eval(Game game) {
         return game.getCurrentPlayer().nearby(direction);
     }
 }

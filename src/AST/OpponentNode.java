@@ -1,12 +1,16 @@
 package AST;
 
 import Game.Game;
-
-import java.util.Map;
+import AST.Node.ExprNode;
 
 public class OpponentNode implements ExprNode {
     @Override
-    public long eval(Game gmae) throws EvalError {
+    public long eval(Game game) {
         return game.getCurrentPlayer().opponent();
+    }
+
+    @Override
+    public void prettyPrint(StringBuilder s) {
+
     }
 }
