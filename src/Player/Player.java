@@ -19,8 +19,8 @@ public class Player {
     }
 
     public void initTurn(){
-        identifier.put("currow",centerPos.getRow());
-        identifier.put("curcol",centerPos.getColumn());
+        identifier.put("currow",(long) centerPos.getRow());
+        identifier.put("curcol",(long) centerPos.getColumn());
     }
 
     public HashMap<String, Long> getIdentifier(){

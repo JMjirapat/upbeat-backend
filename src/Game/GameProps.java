@@ -1,6 +1,7 @@
 package Game;
 
 import Map.Region;
+import Map.Territory;
 import Parser.ConstructorParser;
 import Player.Player;
 import Tokenizer.ConstructorTokenizer;
@@ -26,10 +27,21 @@ public class GameProps extends Game{
     public HashMap<String, Long> getIdentifier() {
         HashMap<String, Long> Identifier = currentPlayer.getIdentifier();
         Identifier.putAll(globalIdentifier);
-        Region currRegion = territory.getEachRegion(Identifier.get("currow").intValue(),Identifier.get("curcol").intValue());
+        Region currRegion = territory.getEachRegion(Identifier.get("currow").intValue(),Identifier.get("curcol").intValue(),this);
         Identifier.put("deposit",currRegion.getDeposit(currentPlayer));
+        Identifier.put("int",currRegion.getInterest());
         Identifier.put("random",(long) randomGen.nextInt(1000));
         return Identifier;
+    }
+
+    @Override
+    public int getRows() {
+        return rows;
+    }
+
+    @Override
+    public int getCols() {
+        return cols;
     }
 
     @Override
@@ -43,8 +55,8 @@ public class GameProps extends Game{
         costToRevision = rev_cost;
         maxDeposit = max_dep;
         interestPercentage = interest_pct;
-        globalIdentifier.put("rows",rows);
-        globalIdentifier.put("cols",cols);
+        globalIdentifier.put("rows",(long) rows);
+        globalIdentifier.put("cols",(long) cols);
         globalIdentifier.put("maxdeposit",maxDeposit);
     }
 
@@ -57,6 +69,11 @@ public class GameProps extends Game{
 
     @Override
     public void Run() {
+
+    }
+
+    @Override
+    public void NewPhase() {
 
     }
 
@@ -98,5 +115,10 @@ public class GameProps extends Game{
     @Override
     public int getCurrTurn(){
         return currTurn;
+    }
+
+    @Override
+    public Territory getTerritory() {
+        return territory;
     }
 }

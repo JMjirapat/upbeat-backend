@@ -1,19 +1,19 @@
 package Map;
 
 public class MapPosition {
-    private long row;
-    private long column;
+    public final int row;
+    public final int column;
 
-    public MapPosition(long r, long c){
+    public MapPosition(int r, int c){
         this.row = r;
         this.column = c;
     }
 
-    public long getRow(){
+    public int getRow(){
         return row;
     }
 
-    public long getColumn(){
+    public int getColumn(){
         return column;
     }
 }

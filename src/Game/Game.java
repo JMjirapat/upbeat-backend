@@ -11,9 +11,8 @@ public abstract class Game {
 
     protected Random randomGen;
     protected HashMap<String, Long> globalIdentifier;
-    protected long rows;
-    protected long cols;
-    protected long random;
+    protected int rows;
+    protected int cols;
     public int initialPlanTime;
     public long initialBudget;
     public long initialCenterDeposit;
@@ -30,13 +29,16 @@ public abstract class Game {
     public abstract Player getCurrentPlayer();
 
     public abstract HashMap<String, Long> getIdentifier();
-
+    public abstract int getRows();
+    public abstract int getCols();
     public abstract int getInterestPercentage();
     public abstract int getCurrTurn();
+    public abstract Territory getTerritory();
     public abstract void setConfig(int m, int n, int init_plan_min, int init_plan_sec, long init_budget, long init_center_dep,
                                    int plan_rev_min, int plan_rev_sec, long rev_cost, long max_dep, int interest_pct);
     public abstract void Configuration(ArrayList<String> codeLines);
     public abstract void Run();
+    public abstract void NewPhase();
     public abstract void StartTurn();
     public abstract void Plan();
     public abstract void Update();
