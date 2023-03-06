@@ -20,6 +20,10 @@ public class Region {
         owner = p;
     }
 
+    public Player getOwner(){
+        return owner;
+    }
+
     public void update(Game game){
         if (deposit == 0) {
             interest = 0;

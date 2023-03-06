@@ -5,6 +5,7 @@ import Map.MapPosition;
 import Map.Region;
 
 import java.util.HashMap;
+import Game.Game;
 
 public class Player {
 
@@ -49,8 +50,43 @@ public class Player {
 
     }
 
-    public long nearby(Direction direction){
+    public long nearby(Direction direction,Game game){
+        Region cityCrewRegion = game.getTerritory().getEachRegion(identifier.get("currow").intValue(),identifier.get("curcol").intValue(),game);
+        Region nearbyRegion;
+        int distance = 1;
+        nearbyRegion = cityCrewRegion.getAdjacent(game,direction);
+        while(nearbyRegion != null && (nearbyRegion.getOwner() == this || nearbyRegion.getOwner() == null)){
+            nearbyRegion = cityCrewRegion.getAdjacent(game,direction);
+            distance++;
+        }
 
+        if(nearbyRegion == null){
+            return 0;
+        }
+
+        switch (direction){
+            case UP -> {
+                return distance*10+1;
+            }
+            case DOWN -> {
+                return distance*10+4;
+            }
+            case UPLEFT -> {
+                return distance*10+6;
+            }
+            case UPRIGHT -> {
+                return distance*10+2;
+            }
+            case DOWNLEFT -> {
+                return distance*10+5;
+            }
+            case DOWNRIGHT -> {
+                return distance*10+3;
+            }
+            default -> {
+                return 0;
+            }
+        }
     }
 
     public long opponent(){
