@@ -1,7 +1,9 @@
 package AST;
-public class EmptyNode implements ExecNode {
 
+import AST.Node.ExecNode;
+import Game.Game;
+public class EmptyNode implements ExecNode {
     @Override
-    public void executePlan(Game game) {
+    public void execute(Game game) {
     }
 }

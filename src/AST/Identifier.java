@@ -14,10 +14,8 @@ public class Identifier implements ExprNode {
             return game.getIdentifier().get(name);
         throw new UnknownVariable(name);
     }
-
     @Override
     public void prettyPrint(StringBuilder s) {
-
+        s.append(name);
     }
-
 }

@@ -1,6 +1,8 @@
 package AST;
 
 import Game.Direction;
+import Game.Game;
+import AST.Node.ExecNode;
 
 public class MoveNode implements ExecNode {
     private Direction direction;
@@ -9,7 +11,7 @@ public class MoveNode implements ExecNode {
     }
 
     @Override
-    public void executePlan(Game game) {
+    public void execute(Game game) {
         game.getCurrentPlayer().move(direction);
     }
 }

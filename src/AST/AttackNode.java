@@ -1,6 +1,8 @@
 package AST;
 
 import Game.Direction;
+import Game.Game;
+import AST.Node.ExecNode;
 
 public class AttackNode implements ExecNode {
 
@@ -12,7 +14,8 @@ public class AttackNode implements ExecNode {
         this.expression = expression;
     }
     @Override
-    public void executePlan(Game game) {
-        game.getCurrentPlayer().attack(direction,expression);
+    public void execute(Game game) {
+        long value = expression.eval(game);
+        game.getCurrentPlayer().attack(direction,value);
     }
 }

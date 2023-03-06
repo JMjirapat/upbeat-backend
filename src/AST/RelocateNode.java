@@ -1,9 +1,10 @@
 package AST;
 
+import Game.Game;
+import AST.Node.ExecNode;
 public class RelocateNode implements ExecNode {
-
     @Override
-    public void executePlan(Game game) {
+    public void execute(Game game) {
         game.getCurrentPlayer().relocate();
     }
 }

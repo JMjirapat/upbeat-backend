@@ -11,6 +11,6 @@ public class OpponentNode implements ExprNode {
 
     @Override
     public void prettyPrint(StringBuilder s) {
-
+        s.append("opponent");
     }
 }

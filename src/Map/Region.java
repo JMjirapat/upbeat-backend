@@ -7,8 +7,7 @@ public class Region {
 
     private MapPosition pos;
     private Player owner;
-    private double deposit;
-
+    private long deposit;
     private double interest;
 
     Region(MapPosition pos,long initDep){
@@ -21,11 +20,12 @@ public class Region {
     }
 
     public void update(Game game){
-        deposit = deposit*(interest/100);
+        double updatedDeposit = deposit * (interest/100);
         interest = game.getInterestPercentage() * Math.log10(deposit) * Math.log(game.getCurrTurn());
+        deposit = (long) updatedDeposit;
     }
 
-    public double getDeposit(Player p){
+    public long getDeposit(Player p){
         if(p.equals(owner))
             return deposit;
         else

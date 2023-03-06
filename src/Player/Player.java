@@ -26,8 +26,8 @@ public class Player {
     public HashMap<String, Long> getIdentifier(){
         return new HashMap<>(identifier);
     }
-    public HashMap<String, Long> setIdentifier(){
-
+    public void setIdentifier(String key,long value){
+        identifier.put(key,value);
     }
     public void relocate(){
 
@@ -45,7 +45,15 @@ public class Player {
 
     }
 
-    public void shoot(Direction direction,long value){
+    public void attack(Direction direction,long value){
+
+    }
+
+    public long nearby(Direction direction){
+
+    }
+
+    public long opponent(){
 
     }
 }

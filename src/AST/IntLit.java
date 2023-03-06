@@ -15,6 +15,6 @@ public class IntLit implements ExprNode {
 
     @Override
     public void prettyPrint(StringBuilder s) {
-
+        s.append(val);
     }
 }

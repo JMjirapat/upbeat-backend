@@ -14,4 +14,10 @@ public class NearByNode implements ExprNode {
     public long eval(Game game) {
         return game.getCurrentPlayer().nearby(direction);
     }
+
+    @Override
+    public void prettyPrint(StringBuilder s) {
+        s.append("nearby: ");
+        s.append(direction.toString());
+    }
 }
