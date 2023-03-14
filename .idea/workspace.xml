@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7b5d6299-a437-43c6-b94f-f88e9ba9bca7" name="Changes" comment="chore-git:revert to before add gradle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/GameProps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameProps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/Region.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Region.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/Territory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Territory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/NearByNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/NearByNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

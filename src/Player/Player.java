@@ -63,34 +63,14 @@ public class Player {
         return currRegion;
     }
 
-    public long nearby(Direction direction,Territory territory){
-        MapPosition crewPos = new MapPosition(identifier.get("currow").intValue(),identifier.get("curcol").intValue());
+    public int nearby(Direction direction,Territory territory){
         Region crewRegion = territory.getEachRegion(crewPos);
-
-
-        switch (direction){
-            case UP -> {
-                return distance*10+1;
-            }
-            case DOWN -> {
-                return distance*10+4;
-            }
-            case UPLEFT -> {
-                return distance*10+6;
-            }
-            case UPRIGHT -> {
-                return distance*10+2;
-            }
-            case DOWNLEFT -> {
-                return distance*10+5;
-            }
-            case DOWNRIGHT -> {
-                return distance*10+3;
-            }
-            default -> {
-                return 0;
-            }
-        }
+        Region oopRegion = eachExplore(direction,territory);
+        if(oopRegion == null)
+            return 0;
+        int distance = Territory.shortestPath(crewRegion.getPos(),oopRegion.getPos());
+        int digitDeposit = (int) Math.log10(Math.abs(oopRegion.getDeposit(this))) + 1;
+        return 100 * distance + digitDeposit;
     }
 
     public long opponent(Game game){
