@@ -1,11 +1,11 @@
 package Player;
 
 import Game.Direction;
+import Game.Game;
 import Map.MapPosition;
 import Map.Region;
 
 import java.util.HashMap;
-import Game.Game;
 
 public class Player {
 
@@ -50,19 +50,17 @@ public class Player {
 
     }
 
-    public long nearby(Direction direction,Game game){
-        Region cityCrewRegion = game.getTerritory().getEachRegion(identifier.get("currow").intValue(),identifier.get("curcol").intValue(),game);
-        Region nearbyRegion;
-        int distance = 1;
-        nearbyRegion = cityCrewRegion.getAdjacent(game,direction);
-        while(nearbyRegion != null && (nearbyRegion.getOwner() == this || nearbyRegion.getOwner() == null)){
-            nearbyRegion = cityCrewRegion.getAdjacent(game,direction);
-            distance++;
+    private Region eachExplore(Direction direction,MapPosition pos,Game game){
+        Region currExplore = game.getTerritory().getEachRegion(pos,game);
+        while(currExplore.getOwner() == this || currExplore.getOwner() == null){
+            Region.getAdjacent(currExplore.ge)
         }
+    }
 
-        if(nearbyRegion == null){
-            return 0;
-        }
+    public long nearby(Direction direction,Game game){
+        MapPosition crewPos = new MapPosition(identifier.get("currow").intValue(),identifier.get("curcol").intValue());
+        Region crewRegion = game.getTerritory().getEachRegion(crewPos,game);
+
 
         switch (direction){
             case UP -> {
@@ -89,7 +87,33 @@ public class Player {
         }
     }
 
-    public long opponent(){
+    public long opponent(Game game){
+        MapPosition crewPos = new MapPosition(identifier.get("currow").intValue(),identifier.get("curcol").intValue());
+        Region crewRegion = game.getTerritory().getEachRegion(crewPos,game);
 
+
+        switch (direction){
+            case UP -> {
+                return distance*10+1;
+            }
+            case DOWN -> {
+                return distance*10+4;
+            }
+            case UPLEFT -> {
+                return distance*10+6;
+            }
+            case UPRIGHT -> {
+                return distance*10+2;
+            }
+            case DOWNLEFT -> {
+                return distance*10+5;
+            }
+            case DOWNRIGHT -> {
+                return distance*10+3;
+            }
+            default -> {
+                return 0;
+            }
+        }
     }
 }

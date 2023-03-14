@@ -30,6 +30,10 @@ public class Region {
         deposit += (long) updatedDeposit;
     }
 
+    public MapPosition getPos(){
+        return new MapPosition(pos.getRow(), pos.getColumn());
+    }
+
     public long getDeposit(Player p){
         if(p.equals(owner))
             return deposit;
@@ -41,42 +45,67 @@ public class Region {
         return (long) interest;
     }
 
-    public Region getAdjacent(Game game,Direction direction){
-        boolean isOddColumn = pos.getColumn()%2 == 1;
-        switch (direction){
+    private static MapPosition AdjacentEven(MapPosition pos,Direction direction){
+        switch (direction) {
             case UP -> {
-                return game.getTerritory().getEachRegion(pos.getRow()-1,pos.getColumn(),game);
+                return new MapPosition(pos.getRow() - 1, pos.getColumn());
             }
             case DOWN -> {
-                return game.getTerritory().getEachRegion(pos.getRow()+1,pos.getColumn(),game);
+                return new MapPosition(pos.getRow() + 1, pos.getColumn());
             }
             case UPLEFT -> {
-                if(isOddColumn)
-                    return game.getTerritory().getEachRegion(pos.getRow()-1,pos.getColumn()-1,game);
-                else
-                    return game.getTerritory().getEachRegion(pos.getRow(),pos.getColumn()-1,game);
+                return new MapPosition(pos.getRow(), pos.getColumn() - 1);
             }
             case UPRIGHT -> {
-                if(isOddColumn)
-                    return game.getTerritory().getEachRegion(pos.getRow()-1,pos.getColumn()+1,game);
-                else
-                    return game.getTerritory().getEachRegion(pos.getRow(),pos.getColumn()+1,game);
+                return new MapPosition(pos.getRow(), pos.getColumn() + 1);
             }
             case DOWNLEFT -> {
-                if(isOddColumn)
-                    return game.getTerritory().getEachRegion(pos.getRow(),pos.getColumn()-1,game);
-                else
-                    return game.getTerritory().getEachRegion(pos.getRow()+1,pos.getColumn()-1,game);
+                return new MapPosition(pos.getRow() + 1, pos.getColumn() - 1);
             }
             case DOWNRIGHT -> {
-                if(isOddColumn)
-                    return game.getTerritory().getEachRegion(pos.getRow(),pos.getColumn()+1,game);
-                else
-                    return game.getTerritory().getEachRegion(pos.getRow()+1,pos.getColumn()+1,game);
+                return new MapPosition(pos.getRow() + 1, pos.getColumn() + 1);
             }
             default -> {
                 return null;
             }
         }
+    }
+
+    private static MapPosition AdjacentOdd(MapPosition pos,Direction direction){
+        switch (direction) {
+            case UP -> {
+                return new MapPosition(pos.getRow() - 1, pos.getColumn());
+            }
+            case DOWN -> {
+                return new MapPosition(pos.getRow() + 1, pos.getColumn());
+            }
+            case UPLEFT -> {
+                return new MapPosition(pos.getRow() - 1, pos.getColumn() - 1);
+            }
+            case UPRIGHT -> {
+                return new MapPosition(pos.getRow() - 1, pos.getColumn() + 1);
+            }
+            case DOWNLEFT -> {
+                return new MapPosition(pos.getRow(), pos.getColumn() - 1);
+            }
+            case DOWNRIGHT -> {
+                return new MapPosition(pos.getRow(), pos.getColumn() + 1);
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
+
+    public static MapPosition getAdjacent(MapPosition pos,Direction direction){
+        boolean isEvenColumn = pos.getColumn()%2 == 0;
+        if(isEvenColumn)
+            return AdjacentEven(pos,direction);
+        else
+            return AdjacentOdd(pos,direction);
+    }
+
+    public Player getOwner() {
+        return owner;
     }
 }

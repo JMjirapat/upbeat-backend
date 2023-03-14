@@ -1,10 +1,6 @@
 package Map;
 
 import Game.Game;
-import Player.Player;
-import Game.Direction;
-
-import java.util.ArrayList;
 
 public class Territory {
     private Region[][] regions;
@@ -13,26 +9,14 @@ public class Territory {
         regions = new Region[rows][cols];
     }
 
-    public Region getEachRegion(int row,int col,Game game){
+    public Region getEachRegion(MapPosition pos,Game game){
+        int row = pos.getRow();
+        int col = pos.getColumn();
         if(row < 0 || row >= game.getRows())
             return null;
         if(col < 0 || col >= game.getCols())
             return null;
         return regions[row][col];
-    }
-
-    public int getShortOpponent(Direction direction, Player p,Game game){
-        Region cityCrewRegion = getEachRegion(p.getIdentifier().get("currow").intValue(),p.getIdentifier().get("curcol").intValue(),game);
-        Region shortRegion;
-        int distance = 1;
-        shortRegion = cityCrewRegion.getAdjacent(game,direction);
-        while(shortRegion != null && (shortRegion.getOwner() == p || shortRegion.getOwner() == null)){
-            shortRegion = cityCrewRegion.getAdjacent(game,direction);
-            distance++;
-        }
-        if(shortRegion == null)
-            return 0;
-        return distance;
     }
 
     public static int shortestPath(int srcRow, int srcCol, int destRow, int destCol){

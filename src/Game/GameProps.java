@@ -1,5 +1,6 @@
 package Game;
 
+import Map.MapPosition;
 import Map.Region;
 import Map.Territory;
 import Parser.ConstructorParser;
@@ -27,9 +28,10 @@ public class GameProps extends Game{
     public HashMap<String, Long> getIdentifier() {
         HashMap<String, Long> Identifier = currentPlayer.getIdentifier();
         Identifier.putAll(globalIdentifier);
-        Region currRegion = territory.getEachRegion(Identifier.get("currow").intValue(),Identifier.get("curcol").intValue(),this);
-        Identifier.put("deposit",currRegion.getDeposit(currentPlayer));
-        Identifier.put("int",currRegion.getInterest());
+        MapPosition pos = new MapPosition(Identifier.get("currow").intValue(),Identifier.get("curcol").intValue());
+        Region cityCrew = territory.getEachRegion(pos,this);
+        Identifier.put("deposit",cityCrew.getDeposit(currentPlayer));
+        Identifier.put("int",cityCrew.getInterest());
         Identifier.put("random",(long) randomGen.nextInt(1000));
         return Identifier;
     }

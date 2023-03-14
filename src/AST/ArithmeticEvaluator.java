@@ -21,7 +21,7 @@ public class ArithmeticEvaluator implements ExprNode {
         if (op.equals("-")) return lv - rv;
         if (op.equals("/")) return lv / rv;
         if (op.equals("%")) return lv % rv;
-        if (op.equals("^")) return lv % rv;
+        if (op.equals("^")) return lv ^ rv;
         throw new UnknownOperator(op);
     }
     public void prettyPrint(StringBuilder s) {
