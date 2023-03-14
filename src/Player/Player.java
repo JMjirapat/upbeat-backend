@@ -57,7 +57,7 @@ public class Player {
 
     private Region eachExplore(Direction direction, Territory territory){
         Region currRegion = territory.getEachRegion(crewPos);
-        while(currRegion.getOwner() == this || currRegion.getOwner() == null){
+        while((currRegion.getOwner() == this || currRegion.getOwner() == null) && currRegion != null){
             currRegion = currRegion.getAdjacentRegion(direction,territory);
         }
         return currRegion;

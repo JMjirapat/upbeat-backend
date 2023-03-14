@@ -12,7 +12,7 @@ public class NearByNode implements ExprNode {
 
     @Override
     public long eval(Game game) {
-        return game.getCurrentPlayer().nearby(direction,game);
+        return game.getCurrentPlayer().nearby(direction,game.getTerritory());
     }
 
     @Override
