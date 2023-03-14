@@ -4,17 +4,22 @@ import Game.Game;
 
 public class Territory {
     private Region[][] regions;
+    private final int rows;
+    private final int cols;
+
 
     Territory(int rows,int cols){
+        this.rows = rows;
+        this.cols = cols;
         regions = new Region[rows][cols];
     }
 
-    public Region getEachRegion(MapPosition pos,Game game){
+    public Region getEachRegion(MapPosition pos){
         int row = pos.getRow();
         int col = pos.getColumn();
-        if(row < 0 || row >= game.getRows())
+        if(row < 0 || row >= this.rows)
             return null;
-        if(col < 0 || col >= game.getCols())
+        if(col < 0 || col >= this.cols)
             return null;
         return regions[row][col];
     }

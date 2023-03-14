@@ -6,13 +6,13 @@ import Game.Direction;
 
 public class Region {
 
-    private MapPosition pos;
+    private final MapPosition position;
     private Player owner;
     private long deposit;
     private double interest;
 
     Region(MapPosition pos,long initDep){
-        this.pos = pos;
+        position = pos;
         deposit = initDep;
     }
 
@@ -31,7 +31,7 @@ public class Region {
     }
 
     public MapPosition getPos(){
-        return new MapPosition(pos.getRow(), pos.getColumn());
+        return new MapPosition(position.getRow(), position.getColumn());
     }
 
     public long getDeposit(Player p){
@@ -97,12 +97,20 @@ public class Region {
         }
     }
 
-    public static MapPosition getAdjacent(MapPosition pos,Direction direction){
+    public static MapPosition getAdjacentPos(MapPosition pos,Direction direction){
         boolean isEvenColumn = pos.getColumn()%2 == 0;
         if(isEvenColumn)
             return AdjacentEven(pos,direction);
         else
             return AdjacentOdd(pos,direction);
+    }
+
+    public Region getAdjacentRegion(Direction direction,Territory territory){
+        boolean isEvenColumn = position.getColumn()%2 == 0;
+        if(isEvenColumn)
+            return territory.getEachRegion(AdjacentEven(position,direction));
+        else
+            return territory.getEachRegion(AdjacentOdd(position,direction));
     }
 
     public Player getOwner() {

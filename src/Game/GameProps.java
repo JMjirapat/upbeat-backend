@@ -29,7 +29,7 @@ public class GameProps extends Game{
         HashMap<String, Long> Identifier = currentPlayer.getIdentifier();
         Identifier.putAll(globalIdentifier);
         MapPosition pos = new MapPosition(Identifier.get("currow").intValue(),Identifier.get("curcol").intValue());
-        Region cityCrew = territory.getEachRegion(pos,this);
+        Region cityCrew = territory.getEachRegion(pos);
         Identifier.put("deposit",cityCrew.getDeposit(currentPlayer));
         Identifier.put("int",cityCrew.getInterest());
         Identifier.put("random",(long) randomGen.nextInt(1000));

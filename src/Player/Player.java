@@ -4,6 +4,7 @@ import Game.Direction;
 import Game.Game;
 import Map.MapPosition;
 import Map.Region;
+import Map.Territory;
 
 import java.util.HashMap;
 
@@ -12,14 +13,18 @@ public class Player {
     private boolean isInitialPlan;
     private HashMap<String, Long> identifier;  //currow curcol budget // region : deposit
     private MapPosition centerPos;
+    private MapPosition crewPos;
+    private long budget;
     //private Region[] ownedRegion;
 
     Player(long initBudget){
         centerPos = new MapPosition(2,4);
+        budget = initBudget;
         identifier.put("budget",initBudget);
     }
 
     public void initTurn(){
+        crewPos = new MapPosition(centerPos.getRow(),centerPos.getColumn());
         identifier.put("currow",(long) centerPos.getRow());
         identifier.put("curcol",(long) centerPos.getColumn());
     }
@@ -50,16 +55,17 @@ public class Player {
 
     }
 
-    private Region eachExplore(Direction direction,MapPosition pos,Game game){
-        Region currExplore = game.getTerritory().getEachRegion(pos,game);
-        while(currExplore.getOwner() == this || currExplore.getOwner() == null){
-            Region.getAdjacent(currExplore.ge)
+    private Region eachExplore(Direction direction, Territory territory){
+        Region currRegion = territory.getEachRegion(crewPos);
+        while(currRegion.getOwner() == this || currRegion.getOwner() == null){
+            currRegion = currRegion.getAdjacentRegion(direction,territory);
         }
+        return currRegion;
     }
 
-    public long nearby(Direction direction,Game game){
+    public long nearby(Direction direction,Territory territory){
         MapPosition crewPos = new MapPosition(identifier.get("currow").intValue(),identifier.get("curcol").intValue());
-        Region crewRegion = game.getTerritory().getEachRegion(crewPos,game);
+        Region crewRegion = territory.getEachRegion(crewPos);
 
 
         switch (direction){
@@ -89,7 +95,7 @@ public class Player {
 
     public long opponent(Game game){
         MapPosition crewPos = new MapPosition(identifier.get("currow").intValue(),identifier.get("curcol").intValue());
-        Region crewRegion = game.getTerritory().getEachRegion(crewPos,game);
+        Region crewRegion = game.getTerritory().getEachRegion(crewPos);
 
 
         switch (direction){
