@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Player {
 
     private boolean isInitialPlan;
-    private HashMap<String, Long> identifier;  //currow curcol budget // region : deposit
+    private HashMap<String, Long> identifiers;  //currow curcol budget // region : deposit
     private MapPosition centerPos;
     private MapPosition crewPos;
     private long budget;
@@ -18,51 +18,62 @@ public class Player {
 
     Player(long initBudget){
         centerPos = new MapPosition(2,4);
-        budget = initBudget;
-        identifier = new HashMap<>();
-        identifier.put("budget",initBudget);
+        identifiers = new HashMap<>();
+        setBudget(initBudget);
+    }
+
+    private void setBudget(long value){
+        budget = value;
+        identifiers.put("budget",value);
+    }
+
+    private void setCrewPos(MapPosition pos){
+        crewPos = pos;
+        identifiers.put("currow",(long) pos.getRow());
+        identifiers.put("curcol",(long) pos.getColumn());
     }
 
     public void initTurn(){
-        crewPos = new MapPosition(centerPos.getRow(),centerPos.getColumn());
-        identifier.put("currow",(long) crewPos.getRow());
-        identifier.put("curcol",(long) crewPos.getColumn());
+        setCrewPos(centerPos);
     }
 
     public HashMap<String, Long> getIdentifier(){
-        return new HashMap<>(identifier);
+        return new HashMap<>(identifiers);
     }
     public void putIdentifier(String key,long value){
-        identifier.put(key,value);
+        identifiers.put(key,value);
     }
-    public void relocate(Territory territory){
-        if(territory.getEachRegion(crewPos).getOwner() != this){
-            return;
-        }
+    public boolean relocate(Territory territory){
         int distance = Territory.shortestPath(centerPos,crewPos);
-
+        long cost = 5 * distance + 10;
+        if(budget < cost || territory.getEachRegion(crewPos).getOwner() != this)
+            return false;
+        setBudget(budget - cost);
+        centerPos = crewPos;
+        return true;
     }
 
-    public void move(Direction direction,Territory territory){
+    public boolean move(Direction direction,Territory territory){
         MapPosition destPos = Region.getAdjacentPos(crewPos,direction);
         Region destRegion = territory.getEachRegion(destPos);
-        if (destRegion == null || (destRegion.getOwner() != null && destRegion.getOwner() != this)) {
-            return;
+        if(budget < 1)
+            return false;
+        setBudget(budget - 1);
+        if(destRegion != null && (destRegion.getOwner() == null || destRegion.getOwner() == this)){
+            setCrewPos(destPos);
         }
-        crewPos = destPos;
-        identifier.put("currow", (long) crewPos.getRow());
-        identifier.put("curcol", (long) crewPos.getColumn());
+        return true;
     }
 
-    public void invest(long value){
-
-    }
-
-    public void collect(long value){
+    public boolean invest(long value){
 
     }
 
-    public void shoot(Direction direction,long value){
+    public boolean collect(long value){
+
+    }
+
+    public boolean shoot(Direction direction,long value){
 
     }
 

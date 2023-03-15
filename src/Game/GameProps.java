@@ -25,9 +25,9 @@ public class GameProps extends Game{
     }
 
     @Override
-    public HashMap<String, Long> getIdentifier() {
+    public HashMap<String, Long> getIdentifiers() {
         HashMap<String, Long> Identifier = currentPlayer.getIdentifier();
-        Identifier.putAll(globalIdentifier);
+        Identifier.putAll(globalIdentifiers);
         MapPosition pos = new MapPosition(Identifier.get("currow").intValue(),Identifier.get("curcol").intValue());
         Region cityCrew = territory.getEachRegion(pos);
         Identifier.put("deposit",cityCrew.getDeposit(currentPlayer));
@@ -57,9 +57,9 @@ public class GameProps extends Game{
         costToRevision = rev_cost;
         maxDeposit = max_dep;
         interestPercentage = interest_pct;
-        globalIdentifier.put("rows",(long) rows);
-        globalIdentifier.put("cols",(long) cols);
-        globalIdentifier.put("maxdeposit",maxDeposit);
+        globalIdentifiers.put("rows",(long) rows);
+        globalIdentifiers.put("cols",(long) cols);
+        globalIdentifiers.put("maxdeposit",maxDeposit);
     }
 
     @Override

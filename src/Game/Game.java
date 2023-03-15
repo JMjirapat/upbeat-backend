@@ -10,7 +10,7 @@ import java.util.Random;
 public abstract class Game {
 
     protected Random randomGen;
-    protected HashMap<String, Long> globalIdentifier;
+    protected HashMap<String, Long> globalIdentifiers;
     protected int rows;
     protected int cols;
     public int initialPlanTime;
@@ -28,7 +28,7 @@ public abstract class Game {
     private ArrayList<Player> players;
     public abstract Player getCurrentPlayer();
 
-    public abstract HashMap<String, Long> getIdentifier();
+    public abstract HashMap<String, Long> getIdentifiers();
     public abstract int getRows();
     public abstract int getCols();
     public abstract int getInterestPercentage();

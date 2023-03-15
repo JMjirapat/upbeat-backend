@@ -6,20 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7b5d6299-a437-43c6-b94f-f88e9ba9bca7" name="Changes" comment="chore-git:revert to before add gradle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/AssignmentNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/AssignmentNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/AttackNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ShootNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/CollectNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/CollectNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/DoneNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/DoneNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/InvestNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/InvestNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/MoveNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/MoveNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/RelocateNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/RelocateNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Identifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Identifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/GameProps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameProps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/ConfigurationParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/ConfigurationParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/ConstructorParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/ConstructorParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenizer/ConfigurationTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer/ConfigurationTokenizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
