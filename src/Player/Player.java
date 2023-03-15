@@ -19,13 +19,14 @@ public class Player {
     Player(long initBudget){
         centerPos = new MapPosition(2,4);
         budget = initBudget;
+        identifier = new HashMap<>();
         identifier.put("budget",initBudget);
     }
 
     public void initTurn(){
         crewPos = new MapPosition(centerPos.getRow(),centerPos.getColumn());
-        identifier.put("currow",(long) centerPos.getRow());
-        identifier.put("curcol",(long) centerPos.getColumn());
+        identifier.put("currow",(long) crewPos.getRow());
+        identifier.put("curcol",(long) crewPos.getColumn());
     }
 
     public HashMap<String, Long> getIdentifier(){
@@ -38,8 +39,15 @@ public class Player {
 
     }
 
-    public void move(Direction direction){
-
+    public void move(Direction direction,Territory territory){
+        MapPosition destPos = Region.getAdjacentPos(crewPos,direction);
+        Region destRegion = territory.getEachRegion(destPos);
+        if (destRegion == null || (destRegion.getOwner() != null && destRegion.getOwner() != this)) {
+            return;
+        }
+        crewPos = destPos;
+        identifier.put("currow", (long) crewPos.getRow());
+        identifier.put("curcol", (long) crewPos.getColumn());
     }
 
     public void invest(long value){

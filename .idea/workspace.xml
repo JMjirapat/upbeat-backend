@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7b5d6299-a437-43c6-b94f-f88e9ba9bca7" name="Changes" comment="chore-git:revert to before add gradle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/OpponentNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/OpponentNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Direction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/Territory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Territory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/TerritoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/TerritoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/MoveNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/MoveNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -246,5 +242,8 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/upbeat_proj$Main.ic" NAME="Main Coverage Results" MODIFIED="1678695878749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/upbeat_proj$TerritoryTest__1_.ic" NAME="TerritoryTest (1) Coverage Results" MODIFIED="1678856513713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>Map.*</FILTER>
+    </SUITE>
   </component>
 </project>

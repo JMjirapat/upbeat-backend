@@ -12,6 +12,6 @@ public class MoveNode implements ExecNode {
 
     @Override
     public void execute(Game game) {
-        game.getCurrentPlayer().move(direction);
+        game.getCurrentPlayer().move(direction, game.getTerritory());
     }
 }
