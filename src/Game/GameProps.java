@@ -3,9 +3,9 @@ package Game;
 import Map.MapPosition;
 import Map.Region;
 import Map.Territory;
-import Parser.ConstructorParser;
 import Player.Player;
-import Tokenizer.ConstructorTokenizer;
+import Tokenizer.*;
+import Parser.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class GameProps extends Game{
 
     @Override
     public Player getCurrentPlayer() {
-        return null;
+        return currentPlayer;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class GameProps extends Game{
 
     @Override
     public void Configuration(ArrayList<String> codeLines) {
-        ConstructorTokenizer tokenizer = new ConstructorTokenizer(codeLines);
-        ConstructorParser parser = new ConstructorParser(tokenizer);
+        Tokenizer tokenizer = new ConfigurationTokenizer(codeLines);
+        Parser parser = new ConfigurationParser(tokenizer);
         parser.parse().execute(this);
     }
 
@@ -107,6 +107,41 @@ public class GameProps extends Game{
     @Override
     public void Reset() {
 
+    }
+
+    @Override
+    public void assign(String identifier, long value) {
+        currentPlayer.putIdentifier(identifier,value);
+    }
+
+    @Override
+    public void collect(long value) {
+        currentPlayer.collect(value);
+    }
+
+    @Override
+    public void done() {
+        EndTurn();
+    }
+
+    @Override
+    public void invest(long value) {
+        currentPlayer.invest(value);
+    }
+
+    @Override
+    public void relocate() {
+        currentPlayer.relocate(territory);
+    }
+
+    @Override
+    public void move(Direction direction) {
+        currentPlayer.move(direction,territory);
+    }
+
+    @Override
+    public void shoot(Direction direction, long value) {
+        currentPlayer.shoot(direction,value);
     }
 
     @Override

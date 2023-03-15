@@ -126,7 +126,7 @@ public class ConstructorParser implements Parser{
         }else if(tkz.peek("invest") || tkz.peek("collect")){
             return parseRegionCommand();
         }else if(tkz.peek("shoot")){
-            return parseAttackCommand();
+            return parseShootCommand();
         }else{
             throw  new NoCommandMatch(tkz.peek(), tkz.getLine());
         }
@@ -148,10 +148,10 @@ public class ConstructorParser implements Parser{
         }
     }
     //    AttackCommand → shoot Direction Expression
-    private ExecNode parseAttackCommand() {
+    private ExecNode parseShootCommand() {
         Direction direction = parseDirection();
         ExprNode expression = parseExpression();
-        return new AttackNode(direction, expression);
+        return new ShootNode(direction, expression);
     }
 
     //    Direction → up | down | upleft | upright | downleft | downright

@@ -7,7 +7,7 @@ public class ConfigurationTokenizer implements Tokenizer{
     private String src, next;  private int pos,line;
     private ArrayList<String> lines;
 
-    ConfigurationTokenizer(ArrayList<String> lines) {
+    public ConfigurationTokenizer(ArrayList<String> lines) {
         this.lines = new ArrayList<>(lines);
         pos = 0;
         line = 0;

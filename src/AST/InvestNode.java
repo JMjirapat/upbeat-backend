@@ -9,6 +9,6 @@ public class InvestNode implements ExecNode {
     }
     @Override
     public void execute(Game game) {
-        game.getCurrentPlayer().invest(expression.eval(game));
+        game.invest(expression.eval(game));
     }
 }

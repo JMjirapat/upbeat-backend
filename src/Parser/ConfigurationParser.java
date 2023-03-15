@@ -19,7 +19,7 @@ public class ConfigurationParser implements Parser {
     private long max_dep;
     private int interest_pct;
 
-    ConfigurationParser(Tokenizer tkz){
+    public ConfigurationParser(Tokenizer tkz){
         if (!tkz.hasNextToken())
             throw new ParserException.TokenRequired();
         this.tkz = tkz;

@@ -11,6 +11,6 @@ public class CollectNode implements ExecNode {
     }
     @Override
     public void execute(Game game) {
-        game.getCurrentPlayer().collect(expression.eval(game));
+        game.collect(expression.eval(game));
     }
 }

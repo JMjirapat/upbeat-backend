@@ -7,6 +7,6 @@ public class DoneNode implements ExecNode {
 
     @Override
     public void execute(Game game) {
-        game.EndTurn();
+        game.done();
     }
 }

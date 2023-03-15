@@ -32,10 +32,14 @@ public class Player {
     public HashMap<String, Long> getIdentifier(){
         return new HashMap<>(identifier);
     }
-    public void setIdentifier(String key,long value){
+    public void putIdentifier(String key,long value){
         identifier.put(key,value);
     }
-    public void relocate(){
+    public void relocate(Territory territory){
+        if(territory.getEachRegion(crewPos).getOwner() != this){
+            return;
+        }
+        int distance = Territory.shortestPath(centerPos,crewPos);
 
     }
 
@@ -58,7 +62,7 @@ public class Player {
 
     }
 
-    public void attack(Direction direction,long value){
+    public void shoot(Direction direction,long value){
 
     }
 

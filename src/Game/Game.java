@@ -45,4 +45,12 @@ public abstract class Game {
     public abstract void EndTurn();
     public abstract boolean hasWinner();
     public abstract void Reset();
+
+    public abstract void assign(String identifier,long value);
+    public abstract void shoot(Direction direction,long value);
+    public abstract void collect(long value);
+    public abstract void done();
+    public abstract void invest(long value);
+    public abstract void move(Direction direction);
+    public abstract void relocate();
 }

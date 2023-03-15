@@ -2,7 +2,7 @@ package Parser;
 
 import AST.Node.ExecNode;
 
-interface Parser {
+public interface Parser {
     /**
      * Attempts to parse the token stream
      * given to this parser.

@@ -20,7 +20,6 @@ public class AssignmentNode implements ExecNode {
         if(special.contains(identifier)){
             return;
         }
-        long value = expression.eval(game);
-        game.getCurrentPlayer().setIdentifier(identifier,value);
+        game.assign(identifier,expression.eval(game));
     }
 }

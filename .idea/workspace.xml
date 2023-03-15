@@ -6,8 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="7b5d6299-a437-43c6-b94f-f88e9ba9bca7" name="Changes" comment="chore-git:revert to before add gradle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/AssignmentNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/AssignmentNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/AttackNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ShootNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/CollectNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/CollectNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/DoneNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/DoneNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/InvestNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/InvestNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AST/MoveNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/MoveNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/RelocateNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/RelocateNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/GameProps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameProps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/ConfigurationParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/ConfigurationParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/ConstructorParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/ConstructorParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tokenizer/ConfigurationTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer/ConfigurationTokenizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,28 +100,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "jdk.selected.JAVA_MODULE": "18",
-    "last_opened_file_path": "/Users/jmjirapat/IdeaProjects/upbeat-proj",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.5103448",
-    "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jmjirapat/IdeaProjects/upbeat-proj&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.5103448&quot;,
+    &quot;settings.build.tools.auto.reload&quot;: &quot;ALL&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/AST" />
