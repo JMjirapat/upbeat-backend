@@ -1,7 +1,6 @@
 package Player;
 
 import Game.Direction;
-import Game.Game;
 import Map.MapPosition;
 import Map.Region;
 import Map.Territory;
@@ -73,29 +72,42 @@ public class Player {
         return 100 * distance + digitDeposit;
     }
 
-    public long opponent(Game game){
-        MapPosition crewPos = new MapPosition(identifier.get("currow").intValue(),identifier.get("curcol").intValue());
-        Region crewRegion = game.getTerritory().getEachRegion(crewPos);
-
+    public int opponent(Territory territory){
+        Region crewRegion = territory.getEachRegion(crewPos);
+        Direction direction = null;
+        int distance = 0;
+        for(Direction d:Direction.values()){
+            Region oopRegion = eachExplore(d,territory);
+            if(oopRegion == null)
+                continue;
+            int currDistance = Territory.shortestPath(crewRegion.getPos(),oopRegion.getPos());
+            if(direction == null){
+                direction = d;
+                distance = currDistance;
+            } else if(currDistance < distance){
+                direction = d;
+                distance = currDistance;
+            }
+        }
 
         switch (direction){
             case UP -> {
                 return distance*10+1;
             }
-            case DOWN -> {
-                return distance*10+4;
-            }
-            case UPLEFT -> {
-                return distance*10+6;
-            }
             case UPRIGHT -> {
                 return distance*10+2;
+            }
+            case DOWNRIGHT -> {
+                return distance*10+3;
+            }
+            case DOWN -> {
+                return distance*10+4;
             }
             case DOWNLEFT -> {
                 return distance*10+5;
             }
-            case DOWNRIGHT -> {
-                return distance*10+3;
+            case UPLEFT -> {
+                return distance*10+6;
             }
             default -> {
                 return 0;

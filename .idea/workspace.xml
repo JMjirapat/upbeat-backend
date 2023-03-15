@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7b5d6299-a437-43c6-b94f-f88e9ba9bca7" name="Changes" comment="chore-git:revert to before add gradle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/NearByNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/NearByNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/OpponentNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/OpponentNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map/Territory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Territory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map/TerritoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/TerritoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -140,10 +144,25 @@
       <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.TerritoryTest (1)">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Map.Main" />
       <module name="upbeat-proj" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TerritoryTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="upbeat-proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Map.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Map" />
+      <option name="MAIN_CLASS_NAME" value="Map.TerritoryTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -163,8 +182,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TerritoryTest.shortestPathTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="upbeat-proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Map.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Map" />
+      <option name="MAIN_CLASS_NAME" value="Map.TerritoryTest" />
+      <option name="METHOD_NAME" value="shortestPathTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TerritoryTest (1)" />
+        <item itemvalue="JUnit.TerritoryTest.shortestPathTest" />
         <item itemvalue="JUnit.TerritoryTest" />
       </list>
     </recent_temporary>

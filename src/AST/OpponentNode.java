@@ -6,7 +6,7 @@ import AST.Node.ExprNode;
 public class OpponentNode implements ExprNode {
     @Override
     public long eval(Game game) {
-        return game.getCurrentPlayer().opponent();
+        return (long) game.getCurrentPlayer().opponent(game.getTerritory());
     }
 
     @Override
