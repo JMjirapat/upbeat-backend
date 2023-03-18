@@ -116,7 +116,7 @@ public class GameProps extends Game{
 
     @Override
     public void collect(long value) {
-        currentPlayer.collect(value);
+        currentPlayer.collect(value,territory);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class GameProps extends Game{
 
     @Override
     public void invest(long value) {
-        currentPlayer.invest(value);
+        currentPlayer.invest(value,territory);
     }
 
     @Override

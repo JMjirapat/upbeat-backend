@@ -45,7 +45,7 @@ public class Player {
     }
     public boolean relocate(Territory territory){
         int distance = Territory.shortestPath(centerPos,crewPos);
-        long cost = 5 * distance + 10;
+        long cost = 5 * distance + 10L;
         if(budget < cost || territory.getEachRegion(crewPos).getOwner() != this)
             return false;
         setBudget(budget - cost);
@@ -54,23 +54,43 @@ public class Player {
     }
 
     public boolean move(Direction direction,Territory territory){
-        MapPosition destPos = Region.getAdjacentPos(crewPos,direction);
-        Region destRegion = territory.getEachRegion(destPos);
         if(budget < 1)
             return false;
-        setBudget(budget - 1);
+        setBudget(budget - 1L);
+        MapPosition destPos = Region.getAdjacentPos(crewPos,direction);
+        Region destRegion = territory.getEachRegion(destPos);
         if(destRegion != null && (destRegion.getOwner() == null || destRegion.getOwner() == this)){
             setCrewPos(destPos);
         }
         return true;
     }
 
-    public boolean invest(long value){
-
+    // A player may invest in a region belonging to no player as long as that region is adjacent to another region belonging to the player.
+    public boolean invest(long value,Territory territory){
+        if(budget < 1)
+            return false;
+        long cost = value + 1L;
+        if(budget < cost){
+            setBudget(budget - 1L);
+            return true;
+        }
+        setBudget(budget-cost);
+        Region crewRegion = territory.getEachRegion(crewPos);
+        crewRegion.invest(value,this);
+        return true;
     }
 
-    public boolean collect(long value){
+    public boolean collect(long value,Territory territory){
+        if(budget < 1)
+            return false;
+        setBudget(budget - 1L);
+        Region crewRegion = territory.getEachRegion(crewPos);
+        crewRegion.collect(value,this);
+        return true;
+    }
 
+    public void receive(long value){
+        setBudget(budget+value);
     }
 
     public boolean shoot(Direction direction,long value){

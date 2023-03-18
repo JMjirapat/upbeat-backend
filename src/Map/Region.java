@@ -10,12 +10,20 @@ public class Region {
     private Player owner;
     private long deposit;
     private double interest;
+    private long maxDeposit;
 
-    Region(MapPosition pos,long initDep){
+    Region(MapPosition pos,long initDep, long maxDesposit){
         position = pos;
         deposit = initDep;
+        this.maxDeposit = maxDesposit;
     }
 
+    private void setDeposit(long value){
+        deposit = Math.max(0,value);
+        deposit = Math.min(deposit,maxDeposit);
+        if(deposit == 0)
+            setOwner(null);
+    }
     public void setOwner(Player p){
         owner = p;
     }
@@ -39,6 +47,19 @@ public class Region {
             return deposit;
         else
             return -(deposit);
+    }
+
+    public void invest(long value, Player p){
+        if(owner == null)
+            setOwner(p);
+        setDeposit(deposit+value);
+    }
+
+    public void collect(long value, Player p){
+        if(owner != p || deposit < value)
+            return;
+        setDeposit(deposit-value);
+        p.receive(value);
     }
 
     public long getInterest(){
