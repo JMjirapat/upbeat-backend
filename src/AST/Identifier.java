@@ -7,7 +7,7 @@ import Game.Game;
 import java.util.HashMap;
 
 public class Identifier implements ExprNode {
-    private String name;
+    private final String name;
     public Identifier(String name) {
         this.name = name;
     }

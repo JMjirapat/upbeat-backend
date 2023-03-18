@@ -10,29 +10,31 @@ public class Region {
     private Player owner;
     private long deposit;
     private double interest;
-    private long maxDeposit;
+    private final long maxDeposit;
+    private boolean isCityCenter = false;
 
-    Region(MapPosition pos,long initDep, long maxDesposit){
+    Region(MapPosition pos,long initDep, long maxDeposit){
         position = pos;
         deposit = initDep;
-        this.maxDeposit = maxDesposit;
+        this.maxDeposit = maxDeposit;
     }
 
     private void setDeposit(long value){
         deposit = Math.max(0,value);
         deposit = Math.min(deposit,maxDeposit);
-        if(deposit == 0)
+        if(deposit == 0){
             setOwner(null);
+        }
     }
     public void setOwner(Player p){
         owner = p;
     }
 
-    public void update(Game game){
-        if (deposit == 0) {
+    public void update(int baseInterest,int turn){
+        if (deposit == 0 || owner == null) {
             interest = 0;
         } else {
-            interest = game.getInterestPercentage() * Math.log10(deposit) * Math.log(game.getCurrTurn());
+            interest = baseInterest * Math.log10(deposit) * Math.log(turn);
         }
         double updatedDeposit = deposit * (interest/100);
         deposit += (long) updatedDeposit;
@@ -60,6 +62,13 @@ public class Region {
             return;
         setDeposit(deposit-value);
         p.receive(value);
+    }
+
+    public void attacked(long value, Game game){
+        Player tmpOwner = owner;
+        setDeposit(deposit-value);
+        if(deposit == 0 && isCityCenter)
+            tmpOwner.lost(game);
     }
 
     public long getInterest(){

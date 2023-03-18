@@ -110,6 +110,10 @@ public class GameProps extends Game{
     }
 
     @Override
+    public void playerDefeated(Player p) {
+    }
+
+    @Override
     public void assign(String identifier, long value) {
         currentPlayer.putIdentifier(identifier,value);
     }
@@ -141,7 +145,7 @@ public class GameProps extends Game{
 
     @Override
     public void shoot(Direction direction, long value) {
-        currentPlayer.shoot(direction,value);
+        currentPlayer.shoot(direction,value,this);
     }
 
     @Override

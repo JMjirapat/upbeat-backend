@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 public class Territory {
-    private Region[][] regions;
+    private final Region[][] regions;
     private final int rows;
     private final int cols;
 

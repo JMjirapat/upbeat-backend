@@ -5,8 +5,8 @@ import AST.ASTException.*;
 import AST.Node.ExprNode;
 
 public class ArithmeticEvaluator implements ExprNode {
-    private ExprNode left, right;
-    private String op;
+    private final ExprNode left, right;
+    private final String op;
     public ArithmeticEvaluator(
             ExprNode left, String op, ExprNode right) {
         this.left = left;

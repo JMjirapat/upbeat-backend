@@ -5,14 +5,14 @@ import AST.Node.ExprNode;
 import Game.Game;
 
 public class NearByNode implements ExprNode {
-    private Direction direction;
+    private final Direction direction;
     public NearByNode(Direction direction) {
         this.direction = direction;
     }
 
     @Override
     public long eval(Game game) {
-        return (long) game.getCurrentPlayer().nearby(direction,game.getTerritory());
+        return game.getCurrentPlayer().nearby(direction,game.getTerritory());
     }
 
     @Override

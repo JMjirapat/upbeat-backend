@@ -4,8 +4,8 @@ import AST.Node.ExecNode;
 import Game.Game;
 
 public class WhileEvaluator implements ExecNode {
-    private ExprNode expression;
-    private ExecNode statement;
+    private final ExprNode expression;
+    private final ExecNode statement;
 
     private int iteratorCount = 0;
 

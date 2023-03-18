@@ -12,6 +12,6 @@ public class StatementsEvaluator implements ExecNode {
     }
 
     public void execute(Game game){
-        statements.stream().forEach(stm -> stm.execute(game));
+        statements.forEach(stm -> stm.execute(game));
     }
 }

@@ -4,13 +4,12 @@ import Game.Direction;
 import Map.MapPosition;
 import Map.Region;
 import Map.Territory;
+import Game.Game;
 
 import java.util.HashMap;
 
 public class Player {
-
-    private boolean isInitialPlan;
-    private HashMap<String, Long> identifiers;  //currow curcol budget // region : deposit
+    private final HashMap<String, Long> identifiers;  //currow curcol budget // region : deposit
     private MapPosition centerPos;
     private MapPosition crewPos;
     private long budget;
@@ -45,7 +44,7 @@ public class Player {
     }
     public boolean relocate(Territory territory){
         int distance = Territory.shortestPath(centerPos,crewPos);
-        long cost = 5 * distance + 10L;
+        long cost = (long) 5 * distance + 10L;
         if(budget < cost || territory.getEachRegion(crewPos).getOwner() != this)
             return false;
         setBudget(budget - cost);
@@ -69,7 +68,7 @@ public class Player {
         if(budget < 1)
             return false;
         long cost = value + 1L;
-        if(budget < cost || !territory.hasOccupiedAdjacent(crewPos,this)){
+        if(budget < cost || !territory.hasOccupiedAdjacent(crewPos,this) || value < 0){
             setBudget(budget - 1L);
             return true;
         }
@@ -83,6 +82,8 @@ public class Player {
         if(budget < 1)
             return false;
         setBudget(budget - 1L);
+        if(value < 0)
+            return true;
         Region crewRegion = territory.getEachRegion(crewPos);
         crewRegion.collect(value,this);
         return true;
@@ -92,13 +93,29 @@ public class Player {
         setBudget(budget+value);
     }
 
-    public boolean shoot(Direction direction,long value){
+    public boolean shoot(Direction direction,long value,Game game){
+        if(budget < 1)
+            return false;
+        Territory territory = game.getTerritory();
+        Region crewRegion = territory.getEachRegion(crewPos);
+        Region targetRegion = crewRegion.getAdjacentRegion(direction,territory);
+        long cost = value + 1L;
+        if(budget < cost || value < 0 || targetRegion == null){
+            setBudget(budget - 1L);
+            return true;
+        }
+        setBudget(budget-cost);
+        targetRegion.attacked(value,game);
+        return true;
+    }
 
+    public void lost(Game game){
+        game.playerDefeated(this);
     }
 
     private Region eachExplore(Direction direction, Territory territory){
         Region currRegion = territory.getEachRegion(crewPos);
-        while((currRegion.getOwner() == this || currRegion.getOwner() == null) && currRegion != null){
+        while(currRegion != null && (currRegion.getOwner() == this || currRegion.getOwner() == null)){
             currRegion = currRegion.getAdjacentRegion(direction,territory);
         }
         return currRegion;
@@ -131,6 +148,9 @@ public class Player {
                 distance = currDistance;
             }
         }
+
+        if(direction == null)
+            return 0;
 
         switch (direction){
             case UP -> {

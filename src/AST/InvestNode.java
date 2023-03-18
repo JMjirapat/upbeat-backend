@@ -3,7 +3,7 @@ import AST.Node.*;
 import Game.Game;
 
 public class InvestNode implements ExecNode {
-    private ExprNode expression;
+    private final ExprNode expression;
     public InvestNode(ExprNode expression){
         this.expression = expression;
     }
