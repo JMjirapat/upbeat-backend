@@ -1,6 +1,10 @@
 package Map;
 
 import Game.Direction;
+import Player.Player;
+
+import java.util.Arrays;
+import java.util.function.Predicate;
 
 public class Territory {
     private Region[][] regions;
@@ -22,6 +26,12 @@ public class Territory {
         if(col < 0 || col >= this.cols)
             return null;
         return regions[row][col];
+    }
+
+    public boolean hasOccupiedAdjacent(MapPosition pos,Player p){
+        Region posRegion = getEachRegion(pos);
+        Predicate<Direction> hasOccupied = d -> (posRegion.getAdjacentRegion(d,this).getOwner() == p);
+        return Arrays.stream(Direction.values()).anyMatch(hasOccupied);
     }
 
     public static int shortestPath(MapPosition srcPos, MapPosition destPos){

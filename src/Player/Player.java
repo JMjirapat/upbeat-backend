@@ -65,12 +65,11 @@ public class Player {
         return true;
     }
 
-    // A player may invest in a region belonging to no player as long as that region is adjacent to another region belonging to the player.
     public boolean invest(long value,Territory territory){
         if(budget < 1)
             return false;
         long cost = value + 1L;
-        if(budget < cost){
+        if(budget < cost || !territory.hasOccupiedAdjacent(crewPos,this)){
             setBudget(budget - 1L);
             return true;
         }
