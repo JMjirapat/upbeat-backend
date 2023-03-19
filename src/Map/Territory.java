@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 public class Territory {
-    private final Region[][] regions;
+    private final Region[] regions;
     private final int rows;
     private final int cols;
 
@@ -15,7 +15,7 @@ public class Territory {
     Territory(int rows,int cols){
         this.rows = rows;
         this.cols = cols;
-        regions = new Region[rows][cols];
+        regions = new Region[rows*cols];
     }
 
     public Region getEachRegion(MapPosition pos){
@@ -25,13 +25,17 @@ public class Territory {
             return null;
         if(col < 0 || col >= this.cols)
             return null;
-        return regions[row][col];
+        return regions[row*col+col];
     }
 
     public boolean hasOccupiedAdjacent(MapPosition pos,Player p){
         Region posRegion = getEachRegion(pos);
         Predicate<Direction> hasOccupied = d -> (posRegion.getAdjacentRegion(d,this).getOwner() == p);
         return Arrays.stream(Direction.values()).anyMatch(hasOccupied);
+    }
+
+    public Region[] getAllRegionsOccupy(Player p){
+        return Arrays.stream(regions).filter(d -> d.getOwner() == p).toArray(Region[]::new);
     }
 
     public static int shortestPath(MapPosition srcPos, MapPosition destPos){

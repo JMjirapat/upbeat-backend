@@ -67,8 +67,10 @@ public class Region {
     public void attacked(long value, Game game){
         Player tmpOwner = owner;
         setDeposit(deposit-value);
-        if(deposit == 0 && isCityCenter)
+        if(deposit == 0 && isCityCenter){
             tmpOwner.lost(game);
+            isCityCenter = false;
+        }
     }
 
     public long getInterest(){

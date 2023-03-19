@@ -101,7 +101,7 @@ public class GameProps extends Game{
 
     @Override
     public boolean hasWinner() {
-        return false;
+        return alivePlayers.size() == 1;
     }
 
     @Override
@@ -111,6 +111,15 @@ public class GameProps extends Game{
 
     @Override
     public void playerDefeated(Player p) {
+        Region[] regionsOccupy = getAllRegionsOccupy(p);
+        for(Region r:regionsOccupy){
+            r.setOwner(null);
+        }
+        alivePlayers.remove(p);
+    }
+
+    public Region[] getAllRegionsOccupy(Player p){
+        return territory.getAllRegionsOccupy(p);
     }
 
     @Override

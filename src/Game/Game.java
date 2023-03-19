@@ -22,10 +22,11 @@ public abstract class Game {
     public long maxDeposit;
     public int interestPercentage;
     protected int currTurn;
-    private int PlayerIndex;
+    protected int PlayerIndex;
     protected Player currentPlayer;
     protected Territory territory;
-    private ArrayList<Player> players;
+    protected ArrayList<Player> players;
+    protected ArrayList<Player> alivePlayers;
     public abstract Player getCurrentPlayer();
 
     public abstract HashMap<String, Long> getIdentifiers();
