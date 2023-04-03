@@ -9,7 +9,6 @@ import AST.Node.*;
 import Game.Direction;
 
 public class ConstructorParser implements Parser{
-
     private final Tokenizer tkz;
     private final List<String> commands = List.of("done", "relocate", "move", "invest", "collect", "shoot");
     private final List<String> reserved = List.of("collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while");
@@ -19,28 +18,6 @@ public class ConstructorParser implements Parser{
             throw new ParserException.TokenRequired();
         this.tkz = tkz;
     }
-
-//    public static Predicate<String> isNumber = str -> str.matches("\\d+");
-//    public static Predicate<String> isString = str -> str.matches("[a-zA-Z]+");
-
-    //    Plan → Statement+
-    //    Statement → Command | BlockStatement | IfStatement | WhileStatement
-    //    Command → AssignmentStatement | ActionCommand
-    //    AssignmentStatement → <identifier> = Expression
-    //    ActionCommand → done | relocate | MoveCommand | RegionCommand | AttackCommand
-    //    MoveCommand → move Direction
-    //    RegionCommand → invest Expression | collect Expression
-    //    AttackCommand → shoot Direction Expression
-    //    Direction → up | down | upleft | upright | downleft | downright
-    //    BlockStatement → { Statement* }
-    //    IfStatement → if ( Expression ) then Statement else Statement
-    //    WhileStatement → while ( Expression ) Statement
-    //    Expression → Expression + Term | Expression - Term | Term
-    //    Term → Term * Factor | Term / Factor | Term % Factor | Factor
-    //    Factor → Power ^ Factor | Power
-    //    Power → <number> | <identifier> | ( Expression ) | InfoExpression
-    //    InfoExpression → opponent | nearby Direction
-
     @Override
     public ExecNode parse() {
         ExecNode plan = parseStatements();
@@ -49,25 +26,13 @@ public class ConstructorParser implements Parser{
             throw new LeftoverToken(tkz.getLine());
         return plan;
     }
-
-    //    Plan → Statement+
     private ExecNode parseStatements(){
         ArrayList<ExecNode> statements = new ArrayList<>();
-        while (tkz.hasNextToken()) {
+        while (tkz.hasNextToken() && !tkz.peek("}")) {
             statements.add(parseStatement());
         }
         return new StatementsEvaluator(statements);
     }
-
-//    private Function<Tokenizer,PlanNode> parseStatements = tkz -> {
-//        ArrayList<PlanNode> statements = new ArrayList<>();
-//        while (tkz.hasNextToken()) {
-//            statements.add(parseStatement.apply(tkz));
-//        }
-//        return new StatementsEvaluator(statements);
-//    };
-
-    //    Statement → Command | BlockStatement | IfStatement | WhileStatement
     private ExecNode parseStatement(){
         if(tkz.peek("{")){
             return parseBlockStatement();
@@ -79,20 +44,6 @@ public class ConstructorParser implements Parser{
             return parseCommand();
         }
     }
-
-//    private Function<Tokenizer,PlanNode> parseStatement = tkz -> {
-//        if(tkz.peek("{")){
-//            return parseBlockStatement();
-//        }else if(tkz.peek("while")){
-//            return parseWhileStatement();
-//        }else if(tkz.peek("if")){
-//            return parseIfStatement();
-//        }else{
-//            return parseCommand();
-//        }
-//    };
-
-    //    Command → AssignmentStatement | ActionCommand
     private ExecNode parseCommand() {
         if(commands.contains(tkz.peek())){
             return parseActionCommand();
@@ -100,8 +51,6 @@ public class ConstructorParser implements Parser{
             return parseAssignmentStatement();
         }
     }
-
-    //    AssignmentStatement → <identifier> = Expression
     private ExecNode parseAssignmentStatement() {
         if (reserved.contains(tkz.peek()))
             throw new AssignToReserved(tkz.peek(), tkz.getLine());
@@ -114,30 +63,29 @@ public class ConstructorParser implements Parser{
         ExprNode expression = parseExpression();
         return new AssignmentNode(identifier,expression);
     }
-
-    //    ActionCommand → done | relocate | MoveCommand | RegionCommand | AttackCommand
     private ExecNode parseActionCommand() {
         if(tkz.peek("done")){
+            tkz.consume();
             return new DoneNode();
         }else if(tkz.peek("relocate")){
+            tkz.consume();
             return new RelocateNode();
         }else if(tkz.peek("move")){
+            tkz.consume();
             return parseMoveCommand();
         }else if(tkz.peek("invest") || tkz.peek("collect")){
             return parseRegionCommand();
         }else if(tkz.peek("shoot")){
+            tkz.consume();
             return parseShootCommand();
         }else{
             throw  new NoCommandMatch(tkz.peek(), tkz.getLine());
         }
     }
-
-    //    MoveCommand → move Direction
     private ExecNode parseMoveCommand() {
         Direction direction = parseDirection();
         return new MoveNode(direction);
     }
-    //    RegionCommand → invest Expression | collect Expression
     private ExecNode parseRegionCommand() {
         String regionCommand = tkz.consume();
         ExprNode expression = parseExpression();
@@ -147,14 +95,11 @@ public class ConstructorParser implements Parser{
             return new CollectNode(expression);
         }
     }
-    //    AttackCommand → shoot Direction Expression
     private ExecNode parseShootCommand() {
         Direction direction = parseDirection();
         ExprNode expression = parseExpression();
         return new ShootNode(direction, expression);
     }
-
-    //    Direction → up | down | upleft | upright | downleft | downright
     private Direction parseDirection() {
         String direction = tkz.consume();
         return switch (direction) {
@@ -167,8 +112,6 @@ public class ConstructorParser implements Parser{
             default -> throw new InvalidDirection(direction, tkz.getLine());
         };
     }
-
-    //    BlockStatement → { Statement* }
     private ExecNode parseBlockStatement() {
         tkz.consume("{");
         if(tkz.peek("}")){
@@ -179,8 +122,6 @@ public class ConstructorParser implements Parser{
         tkz.consume("}");
         return s;
     }
-
-    //    IfStatement → if ( Expression ) then Statement else Statement
     private ExecNode parseIfStatement() {
         tkz.consume("if");
         tkz.consume("(");
@@ -192,8 +133,6 @@ public class ConstructorParser implements Parser{
         ExecNode fs = parseStatement();
         return new IfElseEvaluator(expression,ts,fs);
     }
-
-    //    WhileStatement → while ( Expression ) Statement
     private ExecNode parseWhileStatement() {
         tkz.consume("while");
         tkz.consume("(");
@@ -202,8 +141,6 @@ public class ConstructorParser implements Parser{
         ExecNode s = parseStatement();
         return new WhileEvaluator(expression,s);
     }
-
-    //    Expression → Expression + Term | Expression - Term | Term // T ((+T) | (-T))*
     private ExprNode parseExpression() {
         ExprNode v = parseTerm();
         while (tkz.peek("+") || tkz.peek("-")) {
@@ -217,8 +154,6 @@ public class ConstructorParser implements Parser{
         }
         return v;
     }
-
-    //    Term → Term * Factor | Term / Factor | Term % Factor | Factor // F ((*F) | (/F) | (%F))*
     private ExprNode parseTerm() {
         ExprNode v = parseFactor();
         while (tkz.peek("*") || tkz.peek("/") || tkz.peek("%")) {
@@ -235,8 +170,6 @@ public class ConstructorParser implements Parser{
         }
         return v;
     }
-
-    //    Factor → Power ^ Factor | Power
     private ExprNode parseFactor() {
         ExprNode v = parsePower();
         while (tkz.peek("^")) {
@@ -245,10 +178,10 @@ public class ConstructorParser implements Parser{
         }
         return v;
     }
-
-    //    Power → <number> | <identifier> | ( Expression ) | InfoExpression
     private ExprNode parsePower() {
-        if (isNumber(tkz.peek())) {
+        if(tkz.peek("nearby") || tkz.peek("opponent")){
+            return parseInfoExpression();
+        } else if (isNumber(tkz.peek())) {
             return new IntLit(Integer.parseInt(tkz.consume()));
         }else if(isString(tkz.peek())){
             return new Identifier(tkz.consume());
@@ -258,11 +191,9 @@ public class ConstructorParser implements Parser{
             tkz.consume(")");
             return v;
         }else{
-            return parseInfoExpression();
+            throw new RuntimeException();
         }
     }
-
-    //    InfoExpression → opponent | nearby Direction
     private ExprNode parseInfoExpression() {
         if(tkz.peek("opponent")){
             tkz.consume();
@@ -281,12 +212,4 @@ public class ConstructorParser implements Parser{
     private static boolean isString(String str){
         return str.matches("[a-zA-Z]+");
     }
-
-//    public static Predicate<String> isNumber = str -> str.matches("\\d+");
-//    public static Predicate<String> isString = str -> str.matches("[a-zA-Z]+");
-
-//    private boolean elem(String x, List<String> list){
-//        Predicate<String> equalsX = a -> a.equals(x);
-//        return list.stream().anyMatch(equalsX);
-//    }
 }

@@ -5,11 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b5d6299-a437-43c6-b94f-f88e9ba9bca7" name="Changes" comment="chore-git:revert to before add gradle">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/upbeat/api/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/ArithmeticEvaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/ArithmeticEvaluator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/AssignmentNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/AssignmentNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/AttackNode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/BooleanEvaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/BooleanEvaluator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/CollectNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/CollectNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/DoneNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/DoneNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/Identifier.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/Identifier.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/IfElseEvaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/IfElseEvaluator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/IntLit.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/IntLit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/InvestNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/InvestNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/MoveNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/MoveNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/NearByNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/NearByNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/RelocateNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/RelocateNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/StatementsEvaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/StatementsEvaluator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/AST/WhileEvaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/AST/WhileEvaluator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Game/GameProps.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Game/GameProps.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Map/Region$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Map/Region$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Map/Region.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Map/Region.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Map/Territory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Map/Territory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Parser/ConfigurationParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Parser/ConfigurationParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Parser/ConstructorParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Parser/ConstructorParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Parser/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Parser/Parser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Player/Player$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Player/Player$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Player/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Player/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Tokenizer/ConfigurationTokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Tokenizer/ConfigurationTokenizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/upbeat-proj/Tokenizer/ConstructorTokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/upbeat-proj/Tokenizer/ConstructorTokenizer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/GameProps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameProps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/Region.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Region.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map/Territory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map/Territory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/ConstructorParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/ConstructorParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tokenizer/ConstructorTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tokenizer/ConstructorTokenizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +174,7 @@
       <command value="gradle clean" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TerritoryTest (1)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Map.Main" />
       <module name="upbeat-proj" />
@@ -237,6 +269,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chore-git:revert to before add gradle" />
     <option name="LAST_COMMIT_MESSAGE" value="chore-git:revert to before add gradle" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Tokenizer.ConstructorTokenizer" memberName="pos" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

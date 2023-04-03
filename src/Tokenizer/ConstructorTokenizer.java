@@ -1,18 +1,18 @@
 package Tokenizer;
 import java.util.ArrayList;
+import java.util.List;
+
 import Tokenizer.TokenizerException.*;
 
 public class ConstructorTokenizer implements Tokenizer{
 
-    private String src, next;  private int pos,line;
-    private ArrayList<String> lines;
+    private String src;
+    private String next;
+    private int pos;
+    private int line;
+    private List<String> lines;
 
-//    public static Predicate<Character> isSpace = c -> c == ' ';
-//    public static Predicate<Character> isUnderscore = c -> c == '_';
-//    public static Predicate<Character> isDigit = c -> Character.isDigit(c);
-//    public static Predicate<Character> isChar = c -> Character.isLetter(c);
-
-    public ConstructorTokenizer(ArrayList<String> lines) {
+    public ConstructorTokenizer(List<String> lines) {
         this.lines = new ArrayList<>(lines);
         pos = 0;
         line = 0;
@@ -60,7 +60,18 @@ public class ConstructorTokenizer implements Tokenizer{
 
     private void computeNext() {
         StringBuilder s = new StringBuilder();
-        while (pos < src.length() && isSpace(src.charAt(pos)))
+        if (pos == src.length()) {
+            if((lines.size()-1) == line){
+                next = null;
+                return;
+            }else {
+                pos = 0;
+                line++;
+                this.src = lines.get(line);
+                //computeNext();
+            }
+        }
+        while (pos < src.length() && (isSpace(src.charAt(pos))))
             pos++;  // ignore whitespace
         if (pos == src.length()) {
             if((lines.size()-1) == line){
@@ -70,7 +81,7 @@ public class ConstructorTokenizer implements Tokenizer{
                 pos = 0;
                 line++;
                 this.src = lines.get(line);
-                computeNext();
+                //computeNext();
             }
         }  // no more tokens
         char c = src.charAt(pos);
@@ -92,11 +103,11 @@ public class ConstructorTokenizer implements Tokenizer{
 
     @Override
     public int getLine(){
-        return line;
+        int indexOffset = 1;
+        return line + indexOffset;
     }
-
     public static boolean isSpace(char c){
-        return c == ' ';
+        return (c == ' ');
     }
 
     public static boolean isUnderscore(char c){

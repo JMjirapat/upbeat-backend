@@ -13,10 +13,9 @@ public class Player {
     private MapPosition centerPos;
     private MapPosition crewPos;
     private long budget;
-    //private Region[] ownedRegion;
 
-    Player(long initBudget){
-        centerPos = new MapPosition(2,4);
+    Player(long initBudget, MapPosition centerPos){
+        this.centerPos = centerPos;
         identifiers = new HashMap<>();
         setBudget(initBudget);
     }

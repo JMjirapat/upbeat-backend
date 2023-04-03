@@ -17,6 +17,13 @@ public class GameProps extends Game{
 
     GameProps(){
         randomGen = new Random();
+        players = new ArrayList<>();
+        alivePlayers = new ArrayList<>();
+        globalIdentifiers = new HashMap<>();
+        initialTurn = true;
+        currTurn = 0;
+        PlayerIndex = 0;
+        isGameEnd = false;
     }
 
     @Override
@@ -47,6 +54,38 @@ public class GameProps extends Game{
     }
 
     @Override
+    public int getInterestPercentage() {
+        return interestPercentage;
+    }
+
+    @Override
+    public int getCurrTurn(){
+        return currTurn;
+    }
+
+    @Override
+    public Territory getTerritory() {
+        return territory;
+    }
+
+    @Override
+    public Region[] getAllRegionsOccupy(Player p){
+        return territory.getAllRegionsOccupy(p);
+    }
+
+    @Override
+    public void Run() {
+
+    }
+
+    @Override
+    public void Configuration(ArrayList<String> codeLines) {
+        Tokenizer tokenizer = new ConfigurationTokenizer(codeLines);
+        Parser parser = new ConfigurationParser(tokenizer);
+        parser.parse().execute(this);
+    }
+
+    @Override
     public void setConfig(int m, int n, int init_plan_min, int init_plan_sec, long init_budget, long init_center_dep, int plan_rev_min, int plan_rev_sec, long rev_cost, long max_dep, int interest_pct) {
         rows = m;
         cols = n;
@@ -60,18 +99,6 @@ public class GameProps extends Game{
         globalIdentifiers.put("rows",(long) rows);
         globalIdentifiers.put("cols",(long) cols);
         globalIdentifiers.put("maxdeposit",maxDeposit);
-    }
-
-    @Override
-    public void Configuration(ArrayList<String> codeLines) {
-        Tokenizer tokenizer = new ConfigurationTokenizer(codeLines);
-        Parser parser = new ConfigurationParser(tokenizer);
-        parser.parse().execute(this);
-    }
-
-    @Override
-    public void Run() {
-
     }
 
     @Override
@@ -110,21 +137,24 @@ public class GameProps extends Game{
     }
 
     @Override
+    public void assign(String identifier, long value) {
+        currentPlayer.putIdentifier(identifier,value);
+    }
+
+
+
+    @Override
+    public void shoot(Direction direction, long value) {
+        currentPlayer.shoot(direction,value,this);
+    }
+
+    @Override
     public void playerDefeated(Player p) {
         Region[] regionsOccupy = getAllRegionsOccupy(p);
         for(Region r:regionsOccupy){
             r.setOwner(null);
         }
         alivePlayers.remove(p);
-    }
-
-    public Region[] getAllRegionsOccupy(Player p){
-        return territory.getAllRegionsOccupy(p);
-    }
-
-    @Override
-    public void assign(String identifier, long value) {
-        currentPlayer.putIdentifier(identifier,value);
     }
 
     @Override
@@ -143,32 +173,12 @@ public class GameProps extends Game{
     }
 
     @Override
-    public void relocate() {
-        currentPlayer.relocate(territory);
-    }
-
-    @Override
     public void move(Direction direction) {
         currentPlayer.move(direction,territory);
     }
 
     @Override
-    public void shoot(Direction direction, long value) {
-        currentPlayer.shoot(direction,value,this);
-    }
-
-    @Override
-    public int getInterestPercentage() {
-        return interestPercentage;
-    }
-
-    @Override
-    public int getCurrTurn(){
-        return currTurn;
-    }
-
-    @Override
-    public Territory getTerritory() {
-        return territory;
+    public void relocate() {
+        currentPlayer.relocate(territory);
     }
 }
